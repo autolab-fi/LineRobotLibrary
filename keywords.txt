@@ -1,0 +1,33 @@
+lineRobot  KEYWORD1
+
+
+set_rotate_coefficinet  KEYWORD2
+set_straight_motion_coefficinet  KEYWORD2
+set_encoder_degrees  KEYWORD2
+startMotorForwardLeft  KEYWORD2
+startMotorBackwardLeft  KEYWORD2
+startMotorForwardRight  KEYWORD2
+startMotorBackwardRight  KEYWORD2
+stopMotorLeft  KEYWORD2
+stopMotorRight  KEYWORD2
+moveMotors  KEYWORD2
+moveForwardDistance  KEYWORD2
+moveBackwardDistance  KEYWORD2
+moveForwardSeconds  KEYWORD2
+moveBackwardSeconds  KEYWORD2
+getPositionLeftEncoder  KEYWORD2
+getPositionRightEncoder  KEYWORD2
+turnLeftAngle  KEYWORD2
+turnRightAngle  KEYWORD2
+resetLeftEncoder  KEYWORD2
+resetRightEncoder  KEYWORD2
+turnLeft  KEYWORD2
+turnRight  KEYWORD2
+rotate KEYWORD2
+
+
+radius_wheel  LITERAL1 
+distance_between_wheel_and_center  LITERAL1 
+encoder_degrees_optimal  LITERAL1 
+k_rot  LITERAL1 
+k  LITERAL1 
