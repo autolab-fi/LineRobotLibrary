@@ -68,8 +68,10 @@ public:
     void stopMotorLeft();
     void stopMotorRight();
     long moveMotors(int dir, int sp);
-    void moveForwardDistance(int sp, float  dist);
-    void moveBackwardDistance(int sp, float  dist);
+    void moveForwardSpeedDistance(int sp, float  dist);
+    void moveBackwardSpeedDistance(int sp, float  dist);
+    void moveForwardDistance(float  dist);
+    void moveBackwardDistance(float  dist);
     void moveForwardSeconds(int seconds);
     void moveBackwardSeconds(int seconds);
     long getPositionLeftEncoder();
