@@ -4,10 +4,10 @@
 //lineRobot::lineRobot(int pinLeft1, int pinLeft2, int pinRight1, int pinRight2, int encoderLeftPin1, int encoderLeftPin2, int encoderRightPin1, int encoderRightPin2, float radius_wheel, float distance_between_wheels){
 //    
 //}
- void lineRobot::set_straight_motion_coefficinet(float value){
+ void lineRobot::set_straight_motion_coefficient(float value){
     k = value;
   }
-  void lineRobot::set_rotate_coefficinet(float value){
+  void lineRobot::set_rotate_coefficient(float value){
     k_rot = value;
   }
   void lineRobot::set_encoder_degrees(float value){
@@ -15,25 +15,25 @@
   }
   void lineRobot::startMotorForwardLeft(int sp){
     if (sp!=0)
-        sp = map(sp, 0, 100, 35, 255);
+        sp = map(sp, 0, 100, 43, 255);
     analogWrite(in1, sp);
     digitalWrite(in2, LOW);
   }
   void lineRobot::startMotorBackwardLeft(int sp){
     if (sp!=0)
-        sp = map(sp, 0, 100, 35, 255);
+        sp = map(sp, 0, 100, 43, 255);
     digitalWrite(in1, LOW);
     analogWrite(in2, sp);
   }
   void lineRobot::startMotorForwardRight(int sp){
     if (sp!=0)
-        sp = map(sp, 0, 100, 35, 255);
+        sp = map(sp, 0, 100, 43, 255);
     analogWrite(in3, sp);
     digitalWrite(in4, LOW);
   }
   void lineRobot::startMotorBackwardRight(int sp){
     if (sp!=0)
-        sp = map(sp, 0, 100, 35, 255);
+        sp = map(sp, 0, 100, 43, 255);
     digitalWrite(in3, LOW);
     analogWrite(in4, sp);
   }

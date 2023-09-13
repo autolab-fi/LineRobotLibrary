@@ -58,8 +58,8 @@ public:
         leftPosition = 0;
         rightPosition = 0;
     };
-    void set_rotate_coefficinet(float value);
-    void set_straight_motion_coefficinet(float value);
+    void set_rotate_coefficient(float value);
+    void set_straight_motion_coefficient(float value);
     void set_encoder_degrees(float value);
     void startMotorForwardLeft(int sp);
     void startMotorBackwardLeft(int sp);
