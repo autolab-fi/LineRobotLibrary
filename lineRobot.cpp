@@ -80,7 +80,7 @@
     return result;
   }
   //Move forward for dist in cm 
-  void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
+  bool lineRobot::moveForwardSpeedDistance(int sp, float  dist){
       long res = 0;
       long t = millis();
       dist = dist*encoder_degrees_optimal*180/3.14/radius_wheel/100;
@@ -94,10 +94,11 @@
       stopMotorRight();
       resetLeftEncoder();
       resetRightEncoder();
+      return true;
   }
   
 //Move backward for dist in cm 
-void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
+bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       long res = 0; 
       long t = millis();
       dist = dist*encoder_degrees_optimal*180/3.14/radius_wheel/100;
@@ -111,18 +112,19 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       stopMotorRight();
       resetLeftEncoder();
       resetRightEncoder();
+      return true;
   }
   
-  void lineRobot::moveForwardDistance(float dist){
-    moveForwardSpeedDistance(1, dist);
+  bool lineRobot::moveForwardDistance(float dist){
+    return moveForwardSpeedDistance(1, dist);
   }
   
-  void lineRobot::moveBackwardDistance(float dist){
-    moveBackwardSpeedDistance(1, dist);
+  bool lineRobot::moveBackwardDistance(float dist){
+    return moveBackwardSpeedDistance(1, dist);
   }
   
 //Move forward for seconds
-  void lineRobot::moveForwardSeconds(int seconds){
+  bool lineRobot::moveForwardSeconds(int seconds){
       long res = 0;
       long t = millis();
       long end_time = millis()+seconds*1000;
@@ -136,9 +138,10 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       stopMotorRight();
       resetLeftEncoder();
       resetRightEncoder();
+      return true;
   }
   //Move forward for seconds
-  void lineRobot::moveBackwardSeconds(int seconds){
+  bool lineRobot::moveBackwardSeconds(int seconds){
       long res = 0;
       long t = millis();
       long end_time = millis()+seconds*1000;
@@ -152,6 +155,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       stopMotorRight();
       resetLeftEncoder();
       resetRightEncoder();
+      return true;
   }
   //retrun
   long lineRobot::getPositionLeftEncoder(){
@@ -160,7 +164,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   long lineRobot::getPositionRightEncoder(){
     return encRight.read();
   }
-  void lineRobot::turnLeftAngle(int ang){
+  bool lineRobot::turnLeftAngle(int ang){
     long res = 0;
     long t = millis();
     long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
@@ -199,8 +203,9 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     stopMotorLeft();
     stopMotorRight();
     delay(200);
+    return true;
   }
-    void lineRobot::turnRightAngle(int ang){
+    bool lineRobot::turnRightAngle(int ang){
 
     long res = 0;
     long t = millis();
@@ -240,6 +245,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     resetLeftEncoder();
     resetRightEncoder();
     delay(200);
+    return true;
   }
   void lineRobot::resetLeftEncoder(){
     leftPosition = 0;
@@ -249,14 +255,14 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     rightPosition = 0;
     encRight.write(0);
   }
-    void lineRobot::turnLeft(){
-    turnLeftAngle(90);
+    bool lineRobot::turnLeft(){
+    return turnLeftAngle(90);
   }
-  void lineRobot::turnRight(){
-    turnRightAngle(90);
+  bool lineRobot::turnRight(){
+    return turnRightAngle(90);
   }
-    void lineRobot::rotate(){
-    turnRightAngle(180);
+  bool lineRobot::rotate(){
+    return turnRightAngle(180);
   }
 
 
