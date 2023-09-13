@@ -173,7 +173,13 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           oldPositionLeft=leftPosition;
           oldPositionRight = rightPosition;
              int spr = abs(ang_goal-rightPosition)*k_rot;
+             if (spr==0){
+              spr=1;
+             }
              int spl = abs(ang_goal-leftPosition)*k_rot;
+             if (spl==0){
+              spl=1;
+             }
              if (ang_goal>leftPosition){
               startMotorBackwardLeft(spl);
              } else{
@@ -208,7 +214,13 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           oldPositionLeft=leftPosition;
           oldPositionRight = rightPosition;
              int spr = abs(ang_goal-rightPosition)*k_rot;
+             if (spr==0){
+              spr=1;
+             }
              int spl = abs(ang_goal-leftPosition)*k_rot;
+             if (spl==0){
+              spl=1;
+             }
              if (ang_goal>leftPosition){
               startMotorForwardLeft(spl);
              } else{
