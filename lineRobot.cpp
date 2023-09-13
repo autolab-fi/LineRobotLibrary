@@ -164,6 +164,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long res = 0;
     long t = millis();
     long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
+    //long ang_goal = get_angle_for_rotate(ang); 
     while ((leftPosition>ang_goal+3 or leftPosition<ang_goal-3) and (rightPosition<ang_goal-3 or rightPosition>ang_goal+3)){
       if (t<millis()){
           leftPosition = abs(encLeft.read());
