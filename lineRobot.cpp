@@ -191,14 +191,14 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
               spl=70;
              }
 
-             if (ang_goal>leftPosition){
+             if (ang_goal+10>leftPosition){
               startMotorBackwardLeft(spl);
-             } else{
+             }else if (ang_goal-10<leftPosition){
               startMotorForwardLeft(spl);
              }
-             if (ang_goal>rightPosition){
+             if (ang_goal+10>rightPosition){
                 startMotorForwardRight(spr);
-             } else{
+             } else if (ang_goal-10<rightPosition){
                startMotorBackwardRight(spr);
              }
           }
@@ -239,14 +239,14 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
              if (spl>70){
               spl=70;
              }
-             if (ang_goal>leftPosition){
+             if (ang_goal+10>leftPosition){
               startMotorForwardLeft(spl);
-             } else{
+             } else if (ang_goal-10<leftPosition) {
               startMotorBackwardLeft(spl);
              }
-             if (ang_goal>rightPosition){
+             if (ang_goal+10>rightPosition){
                 startMotorBackwardRight(spr);
-             } else{
+             } else if (ang_goal-10<rightPosition) {
                startMotorForwardRight(spr);
              }
           }
