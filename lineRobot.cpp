@@ -169,7 +169,7 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long t = millis();
     long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+3 or leftPosition<ang_goal-3) and (rightPosition<ang_goal-3 or rightPosition>ang_goal+3)){
+    while ((leftPosition>ang_goal+10 or leftPosition<ang_goal-10) and (rightPosition<ang_goal-10 or rightPosition>ang_goal+10)){
       if (t<millis()){
           leftPosition = abs(encLeft.read());
           rightPosition = abs(encRight.read());
@@ -218,7 +218,7 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long t = millis();
     long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+3 or leftPosition<ang_goal-3) and (rightPosition<ang_goal-3 or rightPosition>ang_goal+3)){
+    while ((leftPosition>ang_goal+10 or leftPosition<ang_goal-10) and (rightPosition<ang_goal-10 or rightPosition>ang_goal+10)){
       if (t<millis()){
           leftPosition = abs(encLeft.read());
           rightPosition = abs(encRight.read());
