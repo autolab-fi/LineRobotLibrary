@@ -188,7 +188,7 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           oldPositionLeft=leftPosition;
           oldPositionRight = rightPosition;
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
-             int spl = computePID(leftPosition,  kp_rot, kd_rot, ki_rot, ang_goal, 0.002, 1, 70);
+             int spl = computePID(leftPosition,  ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
 
              if (ang_goal+8>leftPosition){
               startMotorBackwardLeft(spl);
@@ -225,7 +225,7 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           oldPositionLeft=leftPosition;
           oldPositionRight = rightPosition;
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
-             int spl = computePID(leftPosition,  kp_rot, kd_rot, ki_rot, ang_goal, 0.002, 1, 70);
+             int spl = computePID(leftPosition,  ang_goal,  kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
              if (ang_goal+10>leftPosition){
               startMotorForwardLeft(spl);
              } else if (ang_goal-10<leftPosition) {
