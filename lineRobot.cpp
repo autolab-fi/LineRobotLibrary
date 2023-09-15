@@ -1,14 +1,17 @@
 #include "lineRobot.h"
 
 
-//lineRobot::lineRobot(int pinLeft1, int pinLeft2, int pinRight1, int pinRight2, int encoderLeftPin1, int encoderLeftPin2, int encoderRightPin1, int encoderRightPin2, float radius_wheel, float distance_between_wheels){
-//    
-//}
  void lineRobot::set_straight_motion_coefficient(float value){
     k = value;
   }
-  void lineRobot::set_rotate_coefficient(float value){
-    k_rot = value;
+  void lineRobot::set_rotate_coefficient_kp(float value){
+    kp_rot = value;
+  }
+  void lineRobot::set_rotate_coefficient_ki(float value){
+    ki_rot = value;
+  }
+  void lineRobot::set_rotate_coefficient_kd(float value){
+    kd_rot = value;
   }
   void lineRobot::set_encoder_degrees(float value){
     encoder_degrees_optimal = value;
@@ -72,8 +75,8 @@
                 startMotorBackwardLeft(spl);
                 startMotorBackwardRight(spr); 
                 break;
-                default:
-            break;
+            default:
+                break;
         }  
     }
     long result = (leftPosition+rightPosition)/2;
@@ -164,6 +167,14 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   long lineRobot::getPositionRightEncoder(){
     return encRight.read();
   }
+  int lineRobot::computePID(float input, float setpoint, float kp, float kd, float ki, float dt, int minOut, int maxOut) {
+    float err = setpoint - input;
+    static float integral = 0, prevErr = 0;
+    integral = constrain(integral + (float)err * dt * ki, minOut, maxOut);
+    float D = (err - prevErr) / dt;
+    prevErr = err;
+    return constrain(err * kp + integral + D * kd, minOut, maxOut);
+  }
   bool lineRobot::turnLeftAngle(int ang){
     long res = 0;
     long t = millis();
@@ -176,29 +187,17 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           if (oldPositionLeft != leftPosition or oldPositionRight != rightPosition){
           oldPositionLeft=leftPosition;
           oldPositionRight = rightPosition;
-             int spr = abs(ang_goal-rightPosition)*k_rot;
-             if (spr<1){
-              spr=1;
-             }
-             if (spr>70){
-              spr=70;
-             }
-             int spl = abs(ang_goal-leftPosition)*k_rot;
-             if (spl<1){
-              spl=1;
-             } 
-             if (spl>70){
-              spl=70;
-             }
+             int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
+             int spl = computePID(leftPosition,  kp_rot, kd_rot, ki_rot, ang_goal, 0.002, 1, 70);
 
-             if (ang_goal+10>leftPosition){
+             if (ang_goal+8>leftPosition){
               startMotorBackwardLeft(spl);
-             }else if (ang_goal-10<leftPosition){
+             }else if (ang_goal-8<leftPosition){
               startMotorForwardLeft(spl);
              }
-             if (ang_goal+10>rightPosition){
+             if (ang_goal+8>rightPosition){
                 startMotorForwardRight(spr);
-             } else if (ang_goal-10<rightPosition){
+             } else if (ang_goal-8<rightPosition){
                startMotorBackwardRight(spr);
              }
           }
@@ -225,20 +224,8 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           if (oldPositionLeft != leftPosition or oldPositionRight != rightPosition){
           oldPositionLeft=leftPosition;
           oldPositionRight = rightPosition;
-             int spr = abs(ang_goal-rightPosition)*k_rot;
-             if (spr<1){
-              spr=1;
-             }
-             if (spr>70){
-              spr=70;
-             }
-             int spl = abs(ang_goal-leftPosition)*k_rot;
-             if (spl<1){
-              spl=1;
-             } 
-             if (spl>70){
-              spl=70;
-             }
+             int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
+             int spl = computePID(leftPosition,  kp_rot, kd_rot, ki_rot, ang_goal, 0.002, 1, 70);
              if (ang_goal+10>leftPosition){
               startMotorForwardLeft(spl);
              } else if (ang_goal-10<leftPosition) {

@@ -31,7 +31,9 @@ public:
     //Coefficient for converting values from the encoder to an angle in degrees
     float encoder_degrees_optimal;
     // Coefficient for turning speed control
-    float k_rot;
+    float kp_rot;
+    float ki_rot;
+    float kd_rot;
     // Coefficient for robot motion straight. The coefficient is greater -> the lagging wheel turns more
     float k;
     lineRobot(int pinLeft1, int pinLeft2, int pinRight1, int pinRight2, int encoderLeftPin1, int encoderLeftPin2, int encoderRightPin1, int encoderRightPin2, float _radius_wheel, float distance_between_wheels):encLeft(encoderLeftPin1, encoderLeftPin2),encRight(encoderRightPin1, encoderRightPin2){
@@ -48,17 +50,22 @@ public:
         //Setup right motor
         pinMode(in3, OUTPUT); 
         pinMode(in4, OUTPUT); 
-        k=0.1;
+        k=0.15;
         radius_wheel =_radius_wheel;
         distance_between_wheel_and_center = distance_between_wheels/2;
         encoder_degrees_optimal = 6.645;
-        k_rot = 0.03;
+        ki_rot = 0.01;
+        kd_rot = 0.01;
+        kp_rot = 0.01;
         oldPositionLeft  = -999;
         oldPositionRight  = -999;
         leftPosition = 0;
         rightPosition = 0;
     };
-    void set_rotate_coefficient(float value);
+    int computePID(float input, float setpoint, float kp, float kd, float ki, float dt, int minOut, int maxOut);
+    void set_rotate_coefficient_kp(float value);
+    void set_rotate_coefficient_ki(float value);
+    void set_rotate_coefficient_kd(float value);
     void set_straight_motion_coefficient(float value);
     void set_encoder_degrees(float value);
     void startMotorForwardLeft(int sp);
