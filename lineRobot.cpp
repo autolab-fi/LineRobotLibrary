@@ -208,7 +208,7 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     resetRightEncoder();
     stopMotorLeft();
     stopMotorRight();
-    delay(200);
+    delay(500);
     return true;
   }
     bool lineRobot::turnRightAngle(int ang){
@@ -244,7 +244,7 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     stopMotorRight();
     resetLeftEncoder();
     resetRightEncoder();
-    delay(200);
+    delay(500);
     return true;
   }
   void lineRobot::resetLeftEncoder(){
