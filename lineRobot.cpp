@@ -19,41 +19,41 @@
   void lineRobot::startMotorForwardLeft(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    analogWrite(in1, sp);
-    digitalWrite(in2, LOW);
+    analogWrite(in1,sp);
+    analogWrite(in2,0);
   }
   void lineRobot::startMotorBackwardLeft(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    digitalWrite(in1, LOW);
-    analogWrite(in2, sp);
+    analogWrite(in1,0);
+    analogWrite(in2,sp);
   }
   void lineRobot::startMotorForwardRight(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    analogWrite(in3, sp);
-    digitalWrite(in4, LOW);
+    analogWrite(in3,sp);
+    analogWrite(in4,0);
   }
   void lineRobot::startMotorBackwardRight(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    digitalWrite(in3, LOW);
-    analogWrite(in4, sp);
+    analogWrite(in3,0);
+    analogWrite(in4,sp);
   }
   void lineRobot::stopMotorLeft(){
-    digitalWrite(in1, LOW);
-    digitalWrite(in2, LOW);
+    analogWrite(in1,0);
+    analogWrite(in2,0);
   }
   void lineRobot::stopMotorRight(){
-    digitalWrite(in3, LOW);
-    digitalWrite(in4, LOW);
+    analogWrite(in3,0);
+    analogWrite(in4,0);
   }
   long lineRobot::moveMotors(int dir, int sp){
     if (sp>90)
         sp=90;
-    leftPosition = abs(encLeft.read());
+    leftPosition = abs(encLeft.getCount());
         
-    rightPosition = abs(encRight.read());
+    rightPosition = abs(encRight.getCount());
     
     if (oldPositionLeft != leftPosition or oldPositionRight != rightPosition){
         oldPositionLeft=leftPosition;
@@ -162,10 +162,10 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   }
   //retrun
   long lineRobot::getPositionLeftEncoder(){
-    return encLeft.read();
+    return encLeft.getCount();
   }
   long lineRobot::getPositionRightEncoder(){
-    return encRight.read();
+    return encRight.getCount();
   }
   int lineRobot::computePID(float input, float setpoint, float kp, float kd, float ki, float dt, int minOut, int maxOut) {
     float err = setpoint - input;
@@ -182,8 +182,8 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     //long ang_goal = get_angle_for_rotate(ang); 
     while ((leftPosition>ang_goal+10 or leftPosition<ang_goal-10) and (rightPosition<ang_goal-10 or rightPosition>ang_goal+10)){
       if (t<millis()){
-          leftPosition = abs(encLeft.read());
-          rightPosition = abs(encRight.read());
+          leftPosition = abs(encLeft.getCount());
+          rightPosition = abs(encRight.getCount());
           if (oldPositionLeft != leftPosition or oldPositionRight != rightPosition){
           oldPositionLeft = leftPosition;
           oldPositionRight = rightPosition;
@@ -219,8 +219,8 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     //long ang_goal = get_angle_for_rotate(ang); 
     while ((leftPosition>ang_goal+10 or leftPosition<ang_goal-10) and (rightPosition<ang_goal-10 or rightPosition>ang_goal+10)){
       if (t<millis()){
-          leftPosition = abs(encLeft.read());
-          rightPosition = abs(encRight.read());
+          leftPosition = abs(encLeft.getCount());
+          rightPosition = abs(encRight.getCount());
           if (oldPositionLeft != leftPosition or oldPositionRight != rightPosition){
           oldPositionLeft = leftPosition;
           oldPositionRight = rightPosition;
@@ -249,11 +249,11 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   }
   void lineRobot::resetLeftEncoder(){
     leftPosition = 0;
-    encLeft.write(0);
+    encLeft.setCount (0);
   }
   void lineRobot::resetRightEncoder(){
     rightPosition = 0;
-    encRight.write(0);
+    encRight.setCount (0);
   }
     bool lineRobot::turnLeft(){
     return turnLeftAngle(90);
@@ -266,4 +266,4 @@ bool lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   }
 
 
-lineRobot robot = lineRobot(4, 5, 6, 7, 18, 19, 20, 21, 0.0325, 0.194);
+lineRobot robot = lineRobot(13, 12, 2, 4, 0.0325, 0.194);

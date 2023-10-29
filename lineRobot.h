@@ -1,7 +1,7 @@
 #pragma once    
 #include "Arduino.h"
 
-#include <Encoder.h>
+#include <ESP32Encoder.h>
   
 class lineRobot
 {
@@ -19,11 +19,11 @@ private:
     long oldPositionRight;
     long leftPosition;
     long rightPosition;
-    Encoder encLeft;
-    Encoder encRight;
-    
+    ESP32Encoder encLeft;
+    ESP32Encoder encRight;
 
 public:
+    
     //radius of wheels
     float radius_wheel;
     //distance between wheel and center
@@ -36,7 +36,8 @@ public:
     float kd_rot;
     // Coefficient for robot motion straight. The coefficient is greater -> the lagging wheel turns more
     float k;
-    lineRobot(int pinLeft1, int pinLeft2, int pinRight1, int pinRight2, int encoderLeftPin1, int encoderLeftPin2, int encoderRightPin1, int encoderRightPin2, float _radius_wheel, float distance_between_wheels):encLeft(encoderLeftPin1, encoderLeftPin2),encRight(encoderRightPin1, encoderRightPin2){
+    lineRobot(int pinLeft1, int pinLeft2, int pinRight1, int pinRight2, float _radius_wheel, float distance_between_wheels):encLeft(true, nullptr, nullptr),encRight(true, nullptr, nullptr){
+	
         distance_between_wheel_and_center = distance_between_wheels/2;
         radius_wheel = radius_wheel;
         in1 = pinLeft1;
@@ -44,12 +45,14 @@ public:
         in3 = pinRight1;
         in4 = pinRight2;
         //Setup left motor
-        pinMode(in1, OUTPUT);
-        pinMode(in2, OUTPUT);
-
+        pinMode(in1,OUTPUT);
+        pinMode(in2,OUTPUT);
+        pinMode(in3,OUTPUT);
+        pinMode(in4,OUTPUT);
+	encLeft.attachHalfQuad(16, 17);
+	encRight.attachHalfQuad(18, 19);
         //Setup right motor
-        pinMode(in3, OUTPUT); 
-        pinMode(in4, OUTPUT); 
+        
         k=0.15;
         radius_wheel =_radius_wheel;
         distance_between_wheel_and_center = distance_between_wheels/2;
