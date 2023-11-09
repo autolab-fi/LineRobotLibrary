@@ -53,10 +53,10 @@ public:
 	encRight.attachHalfQuad(18, 19);
         //Setup right motor
         
-        k=0.15;
+        k=0.3;
         radius_wheel =_radius_wheel;
         distance_between_wheel_and_center = distance_between_wheels/2;
-        encoder_degrees_optimal = 6.9;
+        encoder_degrees_optimal = 2.75;
         ki_rot = 0.0001;
         kd_rot = 0.00001;
         kp_rot = 0.001;
