@@ -31,22 +31,22 @@
   void lineRobot::startMotorForwardRight(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    analogWrite(in3,sp);
-    analogWrite(in4,0);
+    analogWrite(in4,sp);
+    analogWrite(in3,0);
   }
   void lineRobot::startMotorBackwardRight(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    analogWrite(in3,0);
-    analogWrite(in4,sp);
+    analogWrite(in4,0);
+    analogWrite(in3,sp);
   }
   void lineRobot::stopMotorLeft(){
     analogWrite(in1,0);
     analogWrite(in2,0);
   }
   void lineRobot::stopMotorRight(){
-    analogWrite(in3,0);
     analogWrite(in4,0);
+    analogWrite(in3,0);
   }
   long lineRobot::moveMotors(int dir, int sp){
     if (sp>90)
