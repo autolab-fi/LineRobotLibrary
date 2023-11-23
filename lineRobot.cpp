@@ -50,8 +50,14 @@
     analogWrite(in4,0);
   }
   void lineRobot::stopRobot(){
-    stopMotorLeft();
-    stopMotorRight();
+    if (abs(encLeft.getCount())>abs(encRight.getCount())){
+      stopMotorLeft();
+      stopMotorRight();
+    }
+    else{
+      stopMotorRight();
+      stopMotorLeft();
+    }
   }
 
   long lineRobot::moveMotors(int dir, int sp){
@@ -263,4 +269,4 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   }
 
 
-lineRobot robot = lineRobot(2, 4, 12, 13, 2.88, 22);
+lineRobot robot = lineRobot(2, 4, 12, 13, 3.25, 22.8);
