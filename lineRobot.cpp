@@ -105,7 +105,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
           t = millis()+3;
         }
       }
-      stopRobot();
+      stop();
     resetEncoders();
   }
   
@@ -120,7 +120,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           t = millis()+3;
         }
       }
-      stopRobot();
+      stop();
     resetEncoders();
   }
   
@@ -143,7 +143,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           t = millis()+3;
         }
       }
-      stopRobot();
+      stop();
     resetEncoders();
   }
   //Move forward for seconds
@@ -157,7 +157,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           t = millis()+3;
         }
       }
-      stopRobot();
+      stop();
     resetEncoders();
   }
   //retrun
@@ -210,7 +210,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           t = millis()+2;
         }
     }
-    stopRobot();
+    stop();
     resetEncoders();
     delay(500);
   }
@@ -242,7 +242,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           t = millis()+2;
         }
     }
-    stopRobot();
+    stop();
     resetEncoders();
     delay(500);
   }
