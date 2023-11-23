@@ -51,8 +51,8 @@ public:
         in4 = pinRight2;
         pinMode(in3,OUTPUT);
         pinMode(in4,OUTPUT);
-	    encLeft.attachHalfQuad(16, 17);
-	    encRight.attachHalfQuad(18, 19);
+	    encLeft.attachHalfQuad(18, 19);
+	    encRight.attachHalfQuad(16, 17);
 
         k=0.15;
         radius_wheel =wheel_radius/100;
@@ -78,7 +78,7 @@ public:
     void startMotorBackwardRight(int sp);
     void stopMotorLeft();
     void stopMotorRight();
-    void stopRobot();
+    void stop();
     long moveMotors(int dir, int sp);
     void moveForwardSpeedDistance(int sp, float  dist);
     void moveBackwardSpeedDistance(int sp, float  dist);

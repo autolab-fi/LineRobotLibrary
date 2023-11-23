@@ -49,7 +49,7 @@
     analogWrite(in3,0);
     analogWrite(in4,0);
   }
-  void lineRobot::stopRobot(){
+  void lineRobot::stop(){
     if (abs(encLeft.getCount())>abs(encRight.getCount())){
       stopMotorLeft();
       stopMotorRight();
