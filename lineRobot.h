@@ -54,10 +54,10 @@ public:
 	    encLeft.attachHalfQuad(16, 17);
 	    encRight.attachHalfQuad(18, 19);
 
-        k=0.15;
+        k=0.17;
         radius_wheel =wheel_radius/100;
         distance_between_wheel_and_center = distance_between_wheels/200;
-        encoder_degrees_optimal = 2.905;
+        encoder_degrees_optimal = 2.915;
         ki_rot = 0.0001;
         kd_rot = 0.00001;
         kp_rot = 0.001;
