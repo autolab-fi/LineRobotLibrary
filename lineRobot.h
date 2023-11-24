@@ -51,8 +51,8 @@ public:
         in4 = pinRight2;
         pinMode(in3,OUTPUT);
         pinMode(in4,OUTPUT);
-	    encLeft.attachHalfQuad(18, 19);
-	    encRight.attachHalfQuad(16, 17);
+	    encLeft.attachHalfQuad(16, 17);
+	    encRight.attachHalfQuad(18, 19);
 
         k=0.15;
         radius_wheel =wheel_radius/100;
