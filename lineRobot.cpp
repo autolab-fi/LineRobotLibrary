@@ -20,14 +20,14 @@
   void lineRobot::startMotorForwardLeft(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    analogWrite(in1, 0);
-    analogWrite(in2, sp);
+    analogWrite(in1, sp);
+    analogWrite(in2, 0);
   }
   void lineRobot::startMotorBackwardLeft(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 43, 255);
-    analogWrite(in1,sp);
-    analogWrite(in2,0);
+    analogWrite(in1, 0);
+    analogWrite(in2, sp);
   }
   void lineRobot::startMotorForwardRight(int sp){
     if (sp!=0)
@@ -42,12 +42,12 @@
     analogWrite(in3, 0);
   }
   void lineRobot::stopMotorLeft(){
-    analogWrite(in1,0);
-    analogWrite(in2,0);
+    analogWrite(in1, 0);
+    analogWrite(in2, 0);
   }
   void lineRobot::stopMotorRight(){
-    analogWrite(in3,0);
-    analogWrite(in4,0);
+    analogWrite(in3, 0);
+    analogWrite(in4, 0);
   }
   void lineRobot::stop(){
     if (abs(encLeft.getCount())>abs(encRight.getCount())){
