@@ -17,6 +17,10 @@
     encoder_degrees_optimal = value;
   }
 
+  int lineRobot::setEncoderDegrees(){
+
+  }
+
   void lineRobot::startMotorForwardLeft(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 50, 255);
@@ -184,9 +188,10 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   void lineRobot::turnLeftAngle(int ang){
     long res = 0;
     long t = millis();
+    int error = 5;
     long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+10 or leftPosition<ang_goal-10) and (rightPosition<ang_goal-10 or rightPosition>ang_goal+10)){
+    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error)){
       if (t<millis()){
           leftPosition = abs(encLeft.getCount());
           rightPosition = abs(encRight.getCount());
@@ -196,14 +201,14 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
              int spl = computePID(leftPosition,  ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
 
-             if (ang_goal+8>leftPosition){
+             if (ang_goal+error>leftPosition){
               startMotorBackwardLeft(spl);
-             }else if (ang_goal-8<leftPosition){
+             }else if (ang_goal-error<leftPosition){
               startMotorForwardLeft(spl);
              }
-             if (ang_goal+8>rightPosition){
+             if (ang_goal+error>rightPosition){
                 startMotorForwardRight(spr);
-             } else if (ang_goal-8<rightPosition){
+             } else if (ang_goal-error<rightPosition){
                startMotorBackwardRight(spr);
              }
           }
@@ -218,8 +223,9 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long res = 0;
     long t = millis();
     long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
+    int error = 5;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+10 or leftPosition<ang_goal-10) and (rightPosition<ang_goal-10 or rightPosition>ang_goal+10)){
+    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error)){
       if (t<millis()){
           leftPosition = abs(encLeft.getCount());
           rightPosition = abs(encRight.getCount());
@@ -228,14 +234,14 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           oldPositionRight = rightPosition;
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
              int spl = computePID(leftPosition,  ang_goal,  kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
-             if (ang_goal+10>leftPosition){
+             if (ang_goal+error>leftPosition){
               startMotorForwardLeft(spl);
-             } else if (ang_goal-10<leftPosition) {
+             } else if (ang_goal-error<leftPosition) {
               startMotorBackwardLeft(spl);
              }
-             if (ang_goal+10>rightPosition){
+             if (ang_goal+error>rightPosition){
                 startMotorBackwardRight(spr);
-             } else if (ang_goal-10<rightPosition) {
+             } else if (ang_goal-error<rightPosition) {
                startMotorForwardRight(spr);
              }
           }
