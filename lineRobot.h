@@ -79,6 +79,7 @@ public:
     void stopMotorLeft();
     void stopMotorRight();
     void stop();
+    int changeDegrees(int ang);
     long moveMotors(int dir, int sp);
     void moveForwardSpeedDistance(int sp, float  dist);
     void moveBackwardSpeedDistance(int sp, float  dist);

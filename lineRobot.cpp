@@ -17,6 +17,27 @@
     encoder_degrees_optimal = value;
   }
 
+  int lineRobot::changeDegrees(int angle){
+      if (angle>170)
+      return angle+10;
+      if (angle>160)
+      return angle+9;
+      if (angle>120)
+      return angle+8;
+      if (angle>110)
+      return angle+6;
+      if (angle>100)
+      return angle+5;
+      if (angle>90)
+      return angle+4;
+      if (angle>75)
+      return angle+3;
+      if (angle>60)
+      return angle+2;
+      if (angle>45)
+     return angle+1;
+  }
+
   void lineRobot::startMotorForwardLeft(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 50, 255);
@@ -185,7 +206,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long res = 0;
     long t = millis();
     int error = 5;
-    long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
+    long ang_goal = changeDegrees(ang)*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
     //long ang_goal = get_angle_for_rotate(ang); 
     while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error)){
       if (t<millis()){
@@ -218,7 +239,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   void lineRobot::turnRightAngle(int ang){
     long res = 0;
     long t = millis();
-    long ang_goal = ang*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
+    long ang_goal = changeDegrees(ang)*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
     int error = 5;
     //long ang_goal = get_angle_for_rotate(ang); 
     while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error)){
