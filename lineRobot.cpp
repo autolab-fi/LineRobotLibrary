@@ -17,10 +17,6 @@
     encoder_degrees_optimal = value;
   }
 
-  int lineRobot::setEncoderDegrees(){
-
-  }
-
   void lineRobot::startMotorForwardLeft(int sp){
     if (sp!=0)
         sp = map(sp, 0, 100, 50, 255);
