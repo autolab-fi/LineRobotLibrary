@@ -217,7 +217,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           oldPositionRight = rightPosition;
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
              int spl = computePID(leftPosition,  ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
-
+             if (rightPosition>leftPosition){
              if (ang_goal+error>leftPosition){
               startMotorBackwardLeft(spl);
              }else if (ang_goal-error<leftPosition){
@@ -227,6 +227,19 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
                 startMotorForwardRight(spr);
              } else if (ang_goal-error<rightPosition){
                startMotorBackwardRight(spr);
+             }
+             }
+             else {
+              if (ang_goal+error>rightPosition){
+                  startMotorForwardRight(spr);
+              } else if (ang_goal-error<rightPosition){
+                startMotorBackwardRight(spr);
+              }
+              if (ang_goal+error>leftPosition){
+                startMotorBackwardLeft(spl);
+              }else if (ang_goal-error<leftPosition){
+                startMotorForwardLeft(spl);
+              }
              }
           }
           t = millis()+2;
@@ -251,15 +264,29 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           oldPositionRight = rightPosition;
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
              int spl = computePID(leftPosition,  ang_goal,  kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
-             if (ang_goal+error>leftPosition){
-              startMotorForwardLeft(spl);
-             } else if (ang_goal-error<leftPosition) {
-              startMotorBackwardLeft(spl);
+             if (rightPosition>leftPosition){
+              if (ang_goal+error>leftPosition){
+                startMotorForwardLeft(spl);
+              } else if (ang_goal-error<leftPosition) {
+                startMotorBackwardLeft(spl);
+              }
+              if (ang_goal+error>rightPosition){
+                  startMotorBackwardRight(spr);
+              } else if (ang_goal-error<rightPosition) {
+                startMotorForwardRight(spr);
+              }
              }
-             if (ang_goal+error>rightPosition){
+             else{
+              if (ang_goal+error>rightPosition){
                 startMotorBackwardRight(spr);
-             } else if (ang_goal-error<rightPosition) {
-               startMotorForwardRight(spr);
+              } else if (ang_goal-error<rightPosition) {
+                startMotorForwardRight(spr);
+              }
+              if (ang_goal+error>leftPosition){
+                startMotorForwardLeft(spl);
+              } else if (ang_goal-error<leftPosition) {
+                startMotorBackwardLeft(spl);
+              }
              }
           }
           t = millis()+2;
