@@ -101,12 +101,22 @@
         }
         switch (dir){
             case 0: 
+                if (leftPosition<rightPosition){
                 startMotorForwardLeft(spl);
-                startMotorForwardRight(spr); 
+                startMotorForwardRight(spr);}
+                else{
+                  startMotorForwardRight(spr);
+                  startMotorForwardLeft(spl);
+                }
                 break;
             case 1: 
+                if (leftPosition<rightPosition){
                 startMotorBackwardLeft(spl);
-                startMotorBackwardRight(spr); 
+                startMotorBackwardRight(spr); }
+                else{
+                  startMotorBackwardRight(spr);
+                  startMotorBackwardLeft(spl);
+                }
                 break;
             default:
                 break;
