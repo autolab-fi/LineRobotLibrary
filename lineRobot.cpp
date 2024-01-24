@@ -106,7 +106,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
         }
       }
       stop();
-    //resetEncoders();
+    resetEncoders();
   }
   
 //Move backward for dist in cm 
@@ -121,7 +121,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
         }
       }
       stop();
-    //resetEncoders();
+    resetEncoders();
   }
   
   void lineRobot::moveForwardDistance(float dist){
@@ -144,7 +144,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
         }
       }
       stop();
-    //resetEncoders();
+    resetEncoders();
   }
   //Move forward for seconds
   void lineRobot::moveBackwardSeconds(int seconds){
@@ -158,7 +158,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
         }
       }
       stop();
-    //resetEncoders();
+    resetEncoders();
   }
   //retrun
   long lineRobot::getPositionLeftEncoder(){
@@ -211,7 +211,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
         }
     }
     stop();
-    //resetEncoders();
+    resetEncoders();
     delay(500);
   }
   void lineRobot::turnRightAngle(int ang){
@@ -243,7 +243,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
         }
     }
     stop();
-    //resetEncoders();
+    resetEncoders();
     delay(500);
   }
   void lineRobot::resetLeftEncoder(){
@@ -254,7 +254,26 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     rightPosition = 0;
     encRight.setCount (0);
   }
+  void lineRobot::resetLeftEncoderValue(int value){
+    leftPosition = value;
+    encLeft.setCount(value);
+  }
+  void lineRobot::resetRightEncoderValue(int value){
+    rightPosition = value;
+    encRight.setCount(value);
+  }
   void lineRobot::resetEncoders(){
+    delta = abs(encLeft.getCount())-abs(encRight.getCount());
+    if delta>5{
+      resetLeftEncoderValue(delta);
+      resetRightEncoder();
+      return;
+    }
+    if delta<-5{
+      resetRightEncoderValue(abs(delta));
+      resetLeftEncoder();
+      return;
+    }
     resetRightEncoder();
     resetLeftEncoder();
   }

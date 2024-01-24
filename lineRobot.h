@@ -94,6 +94,8 @@ public:
     void turnRightAngle(int ang);
     void resetLeftEncoder();
     void resetRightEncoder();
+    void resetLeftEncoderValue(int value);
+    void resetRightEncoderValue(int value);
     void resetEncoders();
     void turnLeft();
     void turnRight();
