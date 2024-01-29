@@ -18,8 +18,10 @@
   }
 
   int lineRobot::changeDegrees(int angle){
+      if (angle>270)
+      return angle+16;
       if (angle>170)
-      return angle+12;
+      return angle+10;
       if (angle>160)
       return angle+9;
       if (angle>120)
