@@ -19,7 +19,7 @@
 
   int lineRobot::changeDegrees(int angle){
       if (angle>170)
-      return angle+10;
+      return angle+12;
       if (angle>160)
       return angle+9;
       if (angle>120)
@@ -324,17 +324,17 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     encRight.setCount(value);
   }
   void lineRobot::resetEncoders(){
-    /*long delta = abs(encLeft.getCount())-abs(encRight.getCount());
+    long delta = abs(encLeft.getCount())-abs(encRight.getCount());
     if (delta>5){
-      resetLeftEncoderValue(delta);
+      resetLeftEncoderValue(2);
       resetRightEncoder();
       return;
     }
     if (delta<-5){
-      resetRightEncoderValue(abs(delta));
+      resetRightEncoderValue(2);
       resetLeftEncoder();
       return;
-    }*/
+    }
     resetRightEncoder();
     resetLeftEncoder();
   }
