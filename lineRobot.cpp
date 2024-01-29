@@ -29,13 +29,14 @@
       if (angle>100)
       return angle+5;
       if (angle>90)
-      return angle+4;
-      if (angle>75)
       return angle+3;
-      if (angle>60)
+      if (angle>75)
       return angle+2;
+      if (angle>60)
+      return angle+1;
       if (angle>45)
-     return angle+1;
+     return angle;
+     return angle;
   }
 
   void lineRobot::startMotorForwardLeft(int sp){
