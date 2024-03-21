@@ -351,4 +351,4 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   }
 
 
-lineRobot robot = lineRobot(2, 4, 12, 13, 3.25, 22.5);
+lineRobot robot = lineRobot(2, 4, 12, 13, 3.25, 21.1);
