@@ -168,7 +168,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   
 //Move forward for seconds
   void lineRobot::moveForwardSeconds(int seconds){
-    resetEncoders();
+    //resetEncoders();
       long res = 0;
       long t = millis();
       long end_time = millis()+seconds*1000;
