@@ -168,6 +168,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   
 //Move forward for seconds
   void lineRobot::moveForwardSeconds(int seconds){
+    resetEncoders();
       long res = 0;
       long t = millis();
       long end_time = millis()+seconds*1000;
@@ -311,29 +312,31 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   }
   void lineRobot::resetLeftEncoder(){
     leftPosition = 0;
-    encLeft.setCount (0);
+    encLeft.clearCount();
   }
   void lineRobot::resetRightEncoder(){
     rightPosition = 0;
-    encRight.setCount (0);
+    encRight.clearCount();
   }
   void lineRobot::resetLeftEncoderValue(int value){
     leftPosition = value;
     encLeft.setCount(value);
+    encLeft.clearCount();
   }
   void lineRobot::resetRightEncoderValue(int value){
     rightPosition = value;
     encRight.setCount(value);
+    encRight.clearCount();
   }
   void lineRobot::resetEncoders(){
     /*long delta = abs(encLeft.getCount())-abs(encRight.getCount());
     if (delta>5){
-      resetLeftEncoderValue(2);
+      resetLeftEncoderValue(delta);
       resetRightEncoder();
       return;
     }
     if (delta<-5){
-      resetRightEncoderValue(2);
+      resetRightEncoderValue(delta);
       resetLeftEncoder();
       return;
     }*/
