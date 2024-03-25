@@ -326,7 +326,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     encRight.setCount(value);
   }
   void lineRobot::resetEncoders(){
-    long delta = abs(encLeft.getCount())-abs(encRight.getCount());
+    /*long delta = abs(encLeft.getCount())-abs(encRight.getCount());
     if (delta>5){
       resetLeftEncoderValue(2);
       resetRightEncoder();
@@ -336,7 +336,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       resetRightEncoderValue(2);
       resetLeftEncoder();
       return;
-    }
+    }*/
     resetRightEncoder();
     resetLeftEncoder();
   }
