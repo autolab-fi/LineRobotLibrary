@@ -136,7 +136,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
       long t = millis();
       long end_time = millis()+500*dist+500;
       dist = dist*encoder_degrees_optimal*180/3.14/radius_wheel/100;
-      while (res < dist and millis()<end_tim){ 
+      while (res < dist and millis()<end_time){ 
        if (t<millis()){
           res = moveMotors(0, sp);
           t = millis()+3;
@@ -153,7 +153,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       long t = millis();
       long end_time = millis()+500*dist+500;
       dist = dist*encoder_degrees_optimal*180/3.14/radius_wheel/100;
-      while (res < dist and millis()<end_time){ 
+      while (res < dist and millis()< end_time){ 
         if (t<millis()){
           res = moveMotors(1, sp);
           t = millis()+3;
