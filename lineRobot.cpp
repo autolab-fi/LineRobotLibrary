@@ -134,8 +134,9 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
   resetEncoders();
       long res = 0;
       long t = millis();
+      long end_time = millis()+500*dist+500;
       dist = dist*encoder_degrees_optimal*180/3.14/radius_wheel/100;
-      while (res < dist){ 
+      while (res < dist and millis()<end_tim){ 
        if (t<millis()){
           res = moveMotors(0, sp);
           t = millis()+3;
@@ -150,8 +151,9 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
   resetEncoders();
       long res = 0; 
       long t = millis();
+      long end_time = millis()+500*dist+500;
       dist = dist*encoder_degrees_optimal*180/3.14/radius_wheel/100;
-      while (res < dist){ 
+      while (res < dist and millis()<end_time){ 
         if (t<millis()){
           res = moveMotors(1, sp);
           t = millis()+3;
@@ -226,8 +228,9 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long t = millis();
     int error = 5;
     long ang_goal = changeDegrees(ang)*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
+    long end_time = millis()+100*ang+500;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error)){
+    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error) and (millis()<end_time)){
       if (t<millis()){
           leftPosition = abs(encLeft.getCount());
           rightPosition = abs(encRight.getCount());
@@ -274,8 +277,9 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long t = millis();
     long ang_goal = changeDegrees(ang)*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
     int error = 5;
+    long end_time = millis()+100*ang+500;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error)){
+    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error) and (millis()<end_time)){
       if (t<millis()){
           leftPosition = abs(encLeft.getCount());
           rightPosition = abs(encRight.getCount());
