@@ -45,13 +45,12 @@ public:
         in2 = pinLeft2;
         pinMode(in1,OUTPUT);
         pinMode(in2,OUTPUT);
-        encLeft.attachHalfQuad(16, 17);
+        encLeft.attachHalfQuad(14, 27);
         //setup right motor
         in3 = pinRight1;
         in4 = pinRight2;
         pinMode(in3,OUTPUT);
         pinMode(in4,OUTPUT);
-	    encLeft.attachHalfQuad(16, 17);
 	    encRight.attachHalfQuad(18, 19);
 
         k=0.25;
