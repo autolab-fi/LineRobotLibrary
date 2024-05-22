@@ -230,11 +230,11 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     long ang_goal = changeDegrees(ang)*distance_between_wheel_and_center/radius_wheel*encoder_degrees_optimal;
     long end_time = millis()+100*ang+500;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error) and (millis()<end_time)){
+    while ((leftPosition>ang_goal+error || leftPosition<ang_goal-error) && (rightPosition<ang_goal-error || rightPosition>ang_goal+error) and (millis()<end_time)){
       if (t<millis()){
           leftPosition = abs(encLeft.getCount());
           rightPosition = abs(encRight.getCount());
-          if (oldPositionLeft != leftPosition or oldPositionRight != rightPosition){
+          if (oldPositionLeft != leftPosition || oldPositionRight != rightPosition){
           oldPositionLeft = leftPosition;
           oldPositionRight = rightPosition;
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
@@ -279,11 +279,11 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     int error = 5;
     long end_time = millis()+100*ang+500;
     //long ang_goal = get_angle_for_rotate(ang); 
-    while ((leftPosition>ang_goal+error or leftPosition<ang_goal-error) and (rightPosition<ang_goal-error or rightPosition>ang_goal+error) and (millis()<end_time)){
+    while ((leftPosition>ang_goal+error || leftPosition<ang_goal-error) && (rightPosition<ang_goal-error || rightPosition>ang_goal+error) and (millis()<end_time)){
       if (t<millis()){
           leftPosition = abs(encLeft.getCount());
           rightPosition = abs(encRight.getCount());
-          if (oldPositionLeft != leftPosition or oldPositionRight != rightPosition){
+          if (oldPositionLeft != leftPosition || oldPositionRight != rightPosition){
           oldPositionLeft = leftPosition;
           oldPositionRight = rightPosition;
              int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
