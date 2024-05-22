@@ -53,7 +53,7 @@ public:
         pinMode(in4,OUTPUT);
 	    encRight.attachHalfQuad(18, 19);
 
-        k=0.6;
+        k=0.2;
         radius_wheel =wheel_radius/100;
         distance_between_wheel_and_center = distance_between_wheels/200;
         encoder_degrees_optimal = 2.96;
