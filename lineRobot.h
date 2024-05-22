@@ -57,8 +57,8 @@ public:
         radius_wheel =wheel_radius/100;
         distance_between_wheel_and_center = distance_between_wheels/200;
         encoder_degrees_optimal = 3.28;
-        ki_rot = 0.0002;
-        kd_rot = 0.00015;
+        ki_rot = 0.0003;
+        kd_rot = 0.0004;
         kp_rot = 0.001;
         oldPositionLeft  = -999;
         oldPositionRight  = -999;

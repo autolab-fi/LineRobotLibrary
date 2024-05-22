@@ -237,8 +237,8 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           if (oldPositionLeft != leftPosition || oldPositionRight != rightPosition){
           oldPositionLeft = leftPosition;
           oldPositionRight = rightPosition;
-             int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
-             int spl = computePID(leftPosition,  ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
+             int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 50);
+             int spl = computePID(leftPosition,  ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 50);
              if (rightPosition>leftPosition){
              if (ang_goal+error>leftPosition){
               startMotorBackwardLeft(spl);
@@ -286,8 +286,8 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
           if (oldPositionLeft != leftPosition || oldPositionRight != rightPosition){
           oldPositionLeft = leftPosition;
           oldPositionRight = rightPosition;
-             int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
-             int spl = computePID(leftPosition,  ang_goal,  kp_rot, kd_rot, ki_rot, 0.002, 1, 70);
+             int spr = computePID(rightPosition, ang_goal, kp_rot, kd_rot, ki_rot, 0.002, 1, 50);
+             int spl = computePID(leftPosition,  ang_goal,  kp_rot, kd_rot, ki_rot, 0.002, 1, 50);
              if (rightPosition>leftPosition){
               if (ang_goal+error>leftPosition){
                 startMotorForwardLeft(spl);
