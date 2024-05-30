@@ -1,95 +1,80 @@
 #pragma once    
 #include "Arduino.h"
 
-#include <ESP32Encoder.h>
+// #include <ESP32Encoder.h>
   
 class lineRobot
 {
-
-private:
-    int in1;
-    int in2;
-    int in3;
-    int in4;
-    int encoderLeftPin1;
-    int encoderLeftPin2;
-    int encoderRightPin1;
-    int encoderRightPin2;
-    long oldPositionLeft;
-    long oldPositionRight;
-    long leftPosition;
-    long rightPosition;
-    ESP32Encoder encLeft;
-    ESP32Encoder encRight;
-
 public:
     
     //radius of wheels
-    float radius_wheel;
+    float RADIUS_WHEEL;
+    float targetAngle = 0;
     //distance between wheel and center
     float distance_between_wheel_and_center;
-    //Coefficient for converting values from the encoder to an angle in degrees
-    float encoder_degrees_optimal;
-    // Coefficient for turning speed control
-    float kp_rot;
-    float ki_rot;
-    float kd_rot;
-    // Coefficient for robot motion straight. The coefficient is greater -> the lagging wheel turns more
-    float k;
-    lineRobot(int pinLeft1, int pinLeft2, int pinRight1, int pinRight2, float wheel_radius, float distance_between_wheels):encLeft(true, nullptr, nullptr),encRight(true, nullptr, nullptr){
-	
-        distance_between_wheel_and_center = distance_between_wheels/2;
-        radius_wheel = radius_wheel;
-        //setup left motor
-        in1 = pinLeft1;
-        in2 = pinLeft2;
-        pinMode(in1,OUTPUT);
-        pinMode(in2,OUTPUT);
-        encLeft.attachHalfQuad(14, 27);
-        //setup right motor
-        in3 = pinRight1;
-        in4 = pinRight2;
-        pinMode(in3,OUTPUT);
-        pinMode(in4,OUTPUT);
-	    encRight.attachHalfQuad(18, 19);
+    float kpAng;
+    float kiAng;
+    float kdAng;
 
-        k=0.49;
-        radius_wheel =wheel_radius/100;
-        distance_between_wheel_and_center = distance_between_wheels/200;
-        encoder_degrees_optimal = 3.28;
-        ki_rot = 0.0002;
-        kd_rot = 0.0002;
-        kp_rot = 0.001;
-        oldPositionLeft  = -999;
-        oldPositionRight  = -999;
-        leftPosition = 0;
-        rightPosition = 0;
-    };
-    int computePID(float input, float setpoint, float kp, float kd, float ki, float dt, int minOut, int maxOut);
-    void setRotateCoefficient_kp(float value);
-    void setRotateCoefficient_ki(float value);
-    void setRotateCoefficient_kd(float value);
-    void setStraightMotionCoefficient(float value);
-    void setEncoderDegrees(float value);
-    void startMotorForwardLeft(int sp);
-    void startMotorBackwardLeft(int sp);
-    void startMotorForwardRight(int sp);
-    void startMotorBackwardRight(int sp);
+    float kpSpeedLeft;
+    float kpSpeedRight;
+    float kiSpeed;
+    float kdSpeedLeft;
+    float kdSpeedRight;
+
+    int leftMotorSignal;
+    int rightMotorSignal;
+    uint8_t STANDARD_SPEED_PERCENTAGE;
+    long lastTimeLeft=0;
+    long lastTimeRight=0;
+
+    long lastTimeLeftSpeed=0;
+    long lastTimeRightSpeed=0;
+
+    float kStraight;
+
+    float integralSpeedLeft=0;
+    float previousErrSpeedLeft=0;
+    float integralSpeedRight=0;
+    float previousErrSpeedRight=0;
+
+    float integralAngLeft=0;
+    float previousErrAngLeft=0;
+    float integralAngRight=0;
+    float previousErrAngRight=0;
+
+    int computePidSpeedMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime);
+    int computePidAngleMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime);
+
+    lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, uint8_t rightMotorPin2, uint8_t encoderPinALeft,uint8_t encoderPinBLeft, uint8_t encoderPinARight, uint8_t encoderPinBRight, float wheel_radius, float distance_between_wheels, int encoderResolution);
+    void resetRegulators();
+    int encoderDegreesRight();
+    int encoderDegreesLeft();
+    float encoderRadianRight();
+    float encoderRadianLeft();
+    void getSpeedMotors(uint8_t interval, float& speedR,float& speedL);
+    
+
+    void moveLeftMotorSpeed(int sp);
+    void moveRightMotorSpeed(int sp);
+    void moveRightMotorSpeed(int speed, float curSpeed);
+    void moveLeftMotorSpeed(int speed, float curSpeed);
+    void moveRightMotor(int u);
+    void moveLeftMotor(int u);
+    float get_speed_L(uint8_t interval);
+    float get_speed_R(uint8_t interval);
+
+   
+
     void stopMotorLeft();
     void stopMotorRight();
     void stop();
-    int changeDegrees(int ang);
-    long moveMotors(int dir, int sp);
     void moveForwardSpeedDistance(int sp, float  dist);
     void moveBackwardSpeedDistance(int sp, float  dist);
     void moveForwardDistance(float  dist);
     void moveBackwardDistance(float  dist);
     void moveForwardSeconds(int seconds);
     void moveBackwardSeconds(int seconds);
-    long getPositionLeftEncoder();
-    long getPositionRightEncoder();
-    long getPositionLeftEncoderDegrees();
-    long getPositionRightEncoderDegrees();
     void turnLeftAngle(int ang);
     void turnRightAngle(int ang);
     void resetLeftEncoder();
@@ -100,6 +85,31 @@ public:
     void turnLeft();
     void turnRight();
     void rotate();
+    
+    static void updateEncoderRight();
+    void begin();
+
+    static void updateEncoderLeft();
+    static uint8_t encoderPinALeft;
+    static uint8_t encoderPinBLeft;
+    static uint8_t encoderPinARight;
+    static uint8_t encoderPinBRight;
+    static volatile long encoderPositionRight;
+    static volatile int lastEncoded_R;
+    static volatile long encoderPositionLeft;
+    static volatile int lastEncoded_L;
+
+    private:
+        uint8_t in1;
+        uint8_t in2;
+        uint8_t in3;
+        uint8_t in4;
+        int pulsesPerRevolution;
+        float k_speed_radians;
+        float max_speed_radians;
+    
+
+
 };
 
 extern lineRobot robot;
