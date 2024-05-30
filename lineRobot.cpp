@@ -50,14 +50,14 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kpAng = 35.00;
         kiAng = 100.00;
         kdAng = 2.50;
-        kpSpeedLeft = 40.00;
-        kpSpeedRight = 25.00;
+        kpSpeedLeft = 50.00;
+        kpSpeedRight = 35.00;
         kdSpeedLeft = 0.50;
         kdSpeedRight = 1.50;
         kiSpeed = 0.00;
         kStraight = 100.00;
             
-        STANDARD_SPEED_PERCENTAGE = 60;
+        STANDARD_SPEED_PERCENTAGE = 70;
 
         encoderPinALeft = 14;
         encoderPinBLeft = 27;
@@ -300,8 +300,8 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
     leftMotorSpeed = constrain(leftMotorSpeed*k_sp, -75, 75);
     rightMotorSpeed = constrain(rightMotorSpeed*k_sp, -75, 75);
     if (abs(angleLeft)<PI && abs(angleRight)<PI){
-      leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.3, 1.0);
-      rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.3, 1.0);
+      leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.55, 1.0);
+      rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.55, 1.0);
     }
     if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
         rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
@@ -342,8 +342,8 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       leftMotorSpeed = constrain(leftMotorSpeed, -75, 75);
       rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
       if (abs(angleLeft)<PI && abs(angleRight)<PI){
-        leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.3, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.3, 1.0);
+        leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.55, 1.0);
+        rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.55, 1.0);
       }
       // moveLeftMotor прямолинейности
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
@@ -383,8 +383,8 @@ void lineRobot::moveForwardSeconds(int seconds){
       int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE;
       int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE;
       if (abs(angleLeft)<PI && abs(angleRight)<PI){
-        leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.5, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.5, 1.0);
+        leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.55, 1.0);
+        rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.55, 1.0);
       }
       if (angleLeft>angleRight) {
           rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
@@ -411,8 +411,8 @@ void lineRobot::moveBackwardSeconds(int seconds){
       int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE;
       // moveLeftMotor прямолинейности
       if (abs(angleLeft)<PI && abs(angleRight)<PI){
-        leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.5, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.5, 1.0);
+        leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.55, 1.0);
+        rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.55, 1.0);
       }
       if (abs(angleLeft)>abs(angleRight)) {
           rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
@@ -470,8 +470,8 @@ void lineRobot::turnLeftAngle(int ang){
     rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
     // плавный старт
     if (abs(angleLeft)<PI && abs(angleRight)<PI){
-      leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.4, 1.0);
-      rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.4, 1.0);
+      leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.6, 1.0);
+      rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.6, 1.0);
     }
     // moveLeftMotor прямолинейности
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
@@ -514,8 +514,8 @@ void lineRobot::turnRightAngle(int ang){
     rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
     // плавный старт
     if (abs(angleLeft)<PI && abs(angleRight)<PI){
-      leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.4, 1.0);
-      rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.4, 1.0);
+      leftMotorSpeed = leftMotorSpeed*constrain(abs(angleLeft)/PI, 0.6, 1.0);
+      rightMotorSpeed = rightMotorSpeed*constrain(abs(angleRight)/PI, 0.6, 1.0);
     }
     // moveLeftMotor прямолинейности
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
