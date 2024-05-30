@@ -462,8 +462,8 @@ void lineRobot::turnLeftAngle(int ang){
     }
     // Движение моторов с вычисленными скоростями
     getSpeedMotors(50,curSpeedL, curSpeedR);
-    moveLeftMotorSpeed(leftMotorSpeed, curSpeedL);
-    moveRightMotorSpeed(-rightMotorSpeed, curSpeedR);
+    moveLeftMotorSpeed(-leftMotorSpeed, curSpeedL);
+    moveRightMotorSpeed(rightMotorSpeed, curSpeedR);
   } 
   stop();
   //resetEncoders();
@@ -502,8 +502,8 @@ void lineRobot::turnRightAngle(int ang){
 
     // Движение моторов с вычисленными скоростями
     getSpeedMotors(50,curSpeedL, curSpeedR);
-    moveLeftMotorSpeed(-leftMotorSpeed, curSpeedL);
-    moveRightMotorSpeed(rightMotorSpeed, curSpeedR);
+    moveLeftMotorSpeed(leftMotorSpeed, curSpeedL);
+    moveRightMotorSpeed(-rightMotorSpeed, curSpeedR);
   } 
   stop();
   //resetEncoders();
