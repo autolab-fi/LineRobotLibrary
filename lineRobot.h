@@ -6,7 +6,10 @@
 class lineRobot
 {
 public:
-    
+     uint8_t in1;
+    uint8_t in2;
+    uint8_t in3;
+    uint8_t in4;
     //radius of wheels
     float RADIUS_WHEEL;
     float targetAngle = 0;
@@ -100,10 +103,6 @@ public:
     static volatile int lastEncoded_L;
 
     private:
-        uint8_t in1;
-        uint8_t in2;
-        uint8_t in3;
-        uint8_t in4;
         int pulsesPerRevolution;
         float k_speed_radians;
         float max_speed_radians;
