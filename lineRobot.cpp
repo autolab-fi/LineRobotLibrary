@@ -50,14 +50,14 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kpAng = 35.00;
         kiAng = 100.00;
         kdAng = 2.50;
-        kpSpeedLeft = 50.00;
-        kpSpeedRight = 35.00;
+        kpSpeedLeft = 45.00;
+        kpSpeedRight = 30.00;
         kdSpeedLeft = 0.50;
-        kdSpeedRight = 1.50;
+        kdSpeedRight = 1.00;
         kiSpeed = 0.00;
         kStraight = 100.00;
             
-        STANDARD_SPEED_PERCENTAGE = 70;
+        STANDARD_SPEED_PERCENTAGE = 50;
 
         encoderPinALeft = 14;
         encoderPinBLeft = 27;
