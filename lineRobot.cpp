@@ -50,10 +50,10 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kpAng = 35.00;
         kiAng = 100.00;
         kdAng = 2.50;
-        kpSpeedLeft = 50.00;
+        kpSpeedLeft = 55.00;
         kpSpeedRight = 35.00;
-        kdSpeedLeft = 0.40;
-        kdSpeedRight = 0.80;
+        kdSpeedLeft = 0.50;
+        kdSpeedRight = 0.10;
         kiSpeed = 0.00;
         kStraight = 100.00;
             
@@ -447,7 +447,7 @@ float lineRobot::encoderRadianLeft(){
 void lineRobot::turnLeftAngle(int ang){
   resetEncoders();
   resetRegulators();
-  float error = 0.08;
+  float error = 0.1;
   targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180);
   long endTime = millis()+40*ang+5000;
   //long ang_goal = get_angle_for_rotate(ang); 
@@ -491,7 +491,7 @@ void lineRobot::turnLeftAngle(int ang){
 void lineRobot::turnRightAngle(int ang){
   resetEncoders();
   resetRegulators();
-  float error = 0.08;
+  float error = 0.1;
   targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180);
   long endTime = millis()+40*ang+5000;
   //long ang_goal = get_angle_for_rotate(ang); 
