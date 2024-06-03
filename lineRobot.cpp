@@ -52,12 +52,12 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kdAng = 2.50;
         kpSpeedLeft = 55.00;
         kpSpeedRight = 35.00;
-        kdSpeedLeft = 0.50;
-        kdSpeedRight = 0.10;
+        kdSpeedLeft = 0.60;
+        kdSpeedRight = 0.15;
         kiSpeed = 0.00;
-        kStraight = 100.00;
+        kStraight = 120.00;
             
-        STANDARD_SPEED_PERCENTAGE = 50;
+        STANDARD_SPEED_PERCENTAGE = 60;
 
         encoderPinALeft = 14;
         encoderPinBLeft = 27;
