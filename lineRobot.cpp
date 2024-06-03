@@ -47,13 +47,13 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         max_speed_radians = 15;
         k_speed_radians = max_speed_radians/100.0;
 
-        kpAng = 55.00;
+        kpAng = 45.00;
         kiAng = 100.00;
         kdAng = 2.50;
         kpSpeedLeft = 55.00;
         kpSpeedRight = 35.00;
-        kdSpeedLeft = 0.60;
-        kdSpeedRight = 0.15;
+        kdSpeedLeft = 0.50;
+        kdSpeedRight = 0.1;
         kiSpeed = 0.00;
         kStraight = 120.00;
             
