@@ -55,7 +55,7 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kdSpeedLeft = 0.50;
         kdSpeedRight = 0.1;
         kiSpeed = 0.00;
-        kStraight = 120.00;
+        kStraight = 80.00;
             
         STANDARD_SPEED_PERCENTAGE = 60;
 
@@ -148,7 +148,23 @@ void lineRobot::moveRightMotorSpeed(int speed, float curSpeed){
   moveRightMotor(rightMotorSignal);
 }
 
+void lineRobot::moveMotorsSpeed(int speedLeft, int speedRight){
+  float curSpeedL = 0;
+  float curSpeedR = 0;
+  getSpeedMotors(50,curSpeedL, curSpeedR);
 
+  float targetSpeedL = speedLeft*k_speed_radians;
+  float errL = targetSpeedL - curSpeedL;
+
+  float targetSpeedR = speedRight*k_speed_radians;
+  float errR = targetSpeedR - curSpeedR;
+  
+  leftMotorSignal=computePidSpeedMotor(errL, kpSpeedLeft, kdSpeedLeft, kiSpeed, integralSpeedLeft, previousErrSpeedLeft, lastTimeLeftSpeed);
+  rightMotorSignal=computePidSpeedMotor(errR, kpSpeedRight, kdSpeedRight, kiSpeed, integralSpeedRight, previousErrSpeedRight, lastTimeRightSpeed);
+
+  moveLeftMotor(leftMotorSignal);
+  moveRightMotor(rightMotorSignal);
+}
 
 void lineRobot::moveLeftMotor(int u){
   if (u<0){
@@ -287,8 +303,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
   float k_sp = abs(sp)/100.0;
   long startTime = millis();
   unsigned int period = constrain(120*dist/k_sp+3000,0,30000);
-  float curSpeedL = 0;
-  float curSpeedR = 0;
+  
   int leftMotorSpeed = 0;
   int rightMotorSpeed = 0;
   previousErrAngLeft = targetAngle;
@@ -311,9 +326,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
         leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
     }
     // Движение моторов с вычисленными скоростями
-    getSpeedMotors(50,curSpeedL, curSpeedR);
-    moveLeftMotorSpeed(leftMotorSpeed, curSpeedL);
-    moveRightMotorSpeed(rightMotorSpeed, curSpeedR);
+    moveMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
   }
   stop();
   //resetEncoders();
@@ -355,10 +368,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       } else if (abs(previousErrAngLeft)>abs(previousErrAngRight)) {
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
       }
-
-      getSpeedMotors(50,curSpeedL, curSpeedR);
-      moveLeftMotorSpeed(-leftMotorSpeed*k_sp, curSpeedL);
-      moveRightMotorSpeed(-rightMotorSpeed*k_sp, curSpeedR);
+      moveMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
     }
     stop();
     //resetEncoders();
@@ -397,9 +407,7 @@ void lineRobot::moveForwardSeconds(int seconds){
       } else if (angleLeft<angleRight) {
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
       }
-      getSpeedMotors(50,curSpeedL, curSpeedR);
-      moveLeftMotorSpeed(leftMotorSpeed, curSpeedL);
-      moveRightMotorSpeed(rightMotorSpeed, curSpeedR);
+      moveMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
     }
     stop();
 }
@@ -427,9 +435,7 @@ void lineRobot::moveBackwardSeconds(int seconds){
       } else if (abs(angleLeft)<abs(angleRight)) {
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
       }
-      getSpeedMotors(50,curSpeedL, curSpeedR);
-      moveLeftMotorSpeed(-leftMotorSpeed, curSpeedL);
-      moveRightMotorSpeed(-rightMotorSpeed, curSpeedR);
+      moveMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
     }
     stop();
   //resetEncoders();
@@ -490,9 +496,7 @@ void lineRobot::turnLeftAngle(int ang){
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
       }
     // Движение моторов с вычисленными скоростями
-    getSpeedMotors(50,curSpeedL, curSpeedR);
-    moveLeftMotorSpeed(-leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100, curSpeedL);
-    moveRightMotorSpeed(rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100, curSpeedR);
+    moveMotorsSpeed(-leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
   } 
   stop();
   //resetEncoders();
@@ -536,9 +540,7 @@ void lineRobot::turnRightAngle(int ang){
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
       }
     // Движение моторов с вычисленными скоростями
-    getSpeedMotors(50,curSpeedL, curSpeedR);
-    moveLeftMotorSpeed(leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100, curSpeedL);
-    moveRightMotorSpeed(-rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100, curSpeedR);
+    moveMotorsSpeed(leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, -rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
   } 
   stop();
   //resetEncoders();
