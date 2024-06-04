@@ -315,10 +315,10 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
     rightMotorSpeed = computePidAngleMotor(targetAngle-angleRight, kpAng, kdAng, kiAng,integralAngRight,previousErrAngRight, lastTimeRight);
     leftMotorSpeed = constrain(leftMotorSpeed*k_sp, -75, 75);
     rightMotorSpeed = constrain(rightMotorSpeed*k_sp, -75, 75);
-    if (millis()-startTime<1000){
-      float power = (millis()-startTime)/1000.0;
-      leftMotorSpeed = leftMotorSpeed*constrain(power, 0.4, 1.0);
-      rightMotorSpeed = rightMotorSpeed*constrain(power, 0.4, 1.0);
+    if (millis() - startTime < 500) {
+        float power = 0.5 + (millis() - startTime) / 1000.0;
+        leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
+        rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
     }
     if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
         rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
@@ -357,11 +357,11 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
      /// Ограничение скорости в диапазоне от -100 до 100
       leftMotorSpeed = constrain(leftMotorSpeed, -75, 75);
       rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
-      if (millis()-startTime<1000){
-        float power = (millis()-startTime)/1000.0;
-        leftMotorSpeed = leftMotorSpeed*constrain(power, 0.4, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(power, 0.4, 1.0);
-      }
+      if (millis() - startTime < 500) {
+        float power = 0.5 + (millis() - startTime) / 1000.0;
+        leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
+        rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
+    }
       // moveLeftMotor прямолинейности
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
           rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
@@ -397,11 +397,11 @@ void lineRobot::moveForwardSeconds(int seconds){
       angleRight = encoderRadianRight();
       int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE;
       int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE;
-      if (millis()-startTime<1000){
-        float power = (millis()-startTime)/1000.0;
-        leftMotorSpeed = leftMotorSpeed*constrain(power, 0.4, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(power, 0.4, 1.0);
-      }
+      if (millis() - startTime < 500) {
+        float power = 0.5 + (millis() - startTime) / 1000.0;
+        leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
+        rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
+    }
       if (angleLeft>angleRight) {
           rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
       } else if (angleLeft<angleRight) {
@@ -425,11 +425,11 @@ void lineRobot::moveBackwardSeconds(int seconds){
       int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE;
       int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE;
       // moveLeftMotor прямолинейности
-      if (millis()-startTime<1000){
-        float power = (millis()-startTime)/1000.0;
-        leftMotorSpeed = leftMotorSpeed*constrain(power, 0.4, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(power, 0.4, 1.0);
-      }
+      if (millis() - startTime < 500) {
+        float power = 0.5 + (millis() - startTime) / 1000.0;
+        leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
+        rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
+    }
       if (abs(angleLeft)>abs(angleRight)) {
           rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
       } else if (abs(angleLeft)<abs(angleRight)) {
@@ -462,7 +462,7 @@ void lineRobot::turnLeftAngle(int ang){
   resetEncoders();
   resetRegulators();
   float error = 0.07;
-  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.01;
+  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.013;
   long startTime = millis();
   unsigned int period = 40*ang+5000;
   //long ang_goal = get_angle_for_rotate(ang); 
@@ -484,11 +484,11 @@ void lineRobot::turnLeftAngle(int ang){
     leftMotorSpeed = constrain(leftMotorSpeed, -75, 75);
     rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
     // плавный старт
-    if (millis()-startTime<1000){
-        float power = (millis()-startTime)/1000.0;
-        leftMotorSpeed = leftMotorSpeed*constrain(power, 0.4, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(power, 0.4, 1.0);
-      }
+    if (millis() - startTime < 500) {
+        float power = 0.5 + (millis() - startTime) / 1000.0;
+        leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
+        rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
+    }
     // moveLeftMotor прямолинейности
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
           rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
@@ -506,7 +506,7 @@ void lineRobot::turnRightAngle(int ang){
   resetEncoders();
   resetRegulators();
   float error = 0.07;
-  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.01;
+  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.013;
   long startTime = millis();
   unsigned int period = 40*ang+5000;
   //long ang_goal = get_angle_for_rotate(ang); 
@@ -528,11 +528,11 @@ void lineRobot::turnRightAngle(int ang){
     leftMotorSpeed = constrain(leftMotorSpeed, -75, 75);
     rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
     // плавный старт
-    if (millis()-startTime<1000){
-        float power = (millis()-startTime)/1000.0;
-        leftMotorSpeed = leftMotorSpeed*constrain(power, 0.4, 1.0);
-        rightMotorSpeed = rightMotorSpeed*constrain(power, 0.4, 1.0);
-      }
+    if (millis() - startTime < 500) {
+        float power = 0.5 + (millis() - startTime) / 1000.0;
+        leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
+        rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
+    }
     // moveLeftMotor прямолинейности
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
           rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
