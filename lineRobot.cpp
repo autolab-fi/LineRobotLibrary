@@ -19,28 +19,18 @@ volatile int lineRobot::lastEncoded_L=0;
 lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, 
   uint8_t rightMotorPin2, uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_, 
   uint8_t encoderPinARight_, uint8_t encoderPinBRight_, float wheel_radius, float distance_between_wheels, int encoderResolution)
-  //funcPointerLeft(&lineRobot::updateEncoderLeft),
-  //funcPointerRight(&lineRobot::updateEncoderRight)
 {
 	
         distance_between_wheel_and_center = distance_between_wheels/2;
         RADIUS_WHEEL = wheel_radius;
-        //setup left motor
         in1 = leftMotorPin1;
         in2 = leftMotorPin2;
         pinMode(in1,OUTPUT);
         pinMode(in2,OUTPUT);
-        // encLeft.attachHalfQuad(14, 27);
-        //setup right motor
         in3 = rightMotorPin1;
         in4 = rightMotorPin2;
         pinMode(in3,OUTPUT);
         pinMode(in4,OUTPUT);
-	    // encRight.attachHalfQuad(18, 19);
-        // encoderPositionRight = 0;
-        // lastEncoded_R = 0;
-        //encoderPositionLeft = 0;
-        //lastEncoded_L = 0;
         rightMotorSignal = 0;
         leftMotorSignal = 0;
         pulsesPerRevolution = encoderResolution;
@@ -80,8 +70,6 @@ void lineRobot::begin(){
 }    
 
 void lineRobot::updateEncoderLeft() {
-  // Чтение текущих значений пинов A и B
-  //Serial.println("AAAAAAAAAAAAAA");
   int MSB_L = digitalRead(encoderPinALeft); // Most Significant Bit
   int LSB_L = digitalRead(encoderPinBLeft); // Least Significant Bit
   //Составление двухбитного числа из значений пинов A и B
@@ -120,35 +108,38 @@ void lineRobot::updateEncoderRight() {
 
 
 void lineRobot::moveLeftMotorSpeed(int speed){
-  float cur_sp = get_speed_L(100);
+  speed = constrain(speed, -100, 100);
+  float cur_sp = get_speed_L(20);
   moveLeftMotorSpeed(speed,cur_sp);
 }
 
 void lineRobot::moveLeftMotorSpeed(int speed, float curSpeed){
-
+  speed = constrain(speed, -100, 100);
   float target_speed = speed*k_speed_radians;
   float err = target_speed - curSpeed;
-  //int u = computePidSpeedMotor(err, kp, kd, ki, integral_L, previousErr_L); 
   leftMotorSignal=computePidSpeedMotor(err, kpSpeedLeft, kdSpeedLeft, kiSpeed, integralSpeedLeft, previousErrSpeedLeft, lastTimeLeftSpeed);
   moveLeftMotor(leftMotorSignal);
 }
 
 
 void lineRobot::moveRightMotorSpeed(int speed){
-  float cur_sp = get_speed_R(100);
+  speed = constrain(speed, -100, 100);
+  float cur_sp = get_speed_R(20);
   moveRightMotorSpeed(speed,cur_sp);
 }
 
 void lineRobot::moveRightMotorSpeed(int speed, float curSpeed){
-  //float cur_sp = get_speed_R(100);
+  speed = constrain(speed, -100, 100);
   float target_speed = speed*k_speed_radians;
   float err = target_speed - curSpeed;
- // int u = ; 
   rightMotorSignal=computePidSpeedMotor(err, kpSpeedRight, kdSpeedRight, kiSpeed, integralSpeedRight, previousErrSpeedRight, lastTimeRightSpeed);
   moveRightMotor(rightMotorSignal);
 }
 
 void lineRobot::moveMotorsSpeed(int speedLeft, int speedRight){
+  speedLeft = constrain(speedLeft, -100, 100);
+  speedRight = constrain(speedRight, -100, 100);
+
   float curSpeedL = 0;
   float curSpeedR = 0;
   getSpeedMotors(50,curSpeedL, curSpeedR);
@@ -164,6 +155,16 @@ void lineRobot::moveMotorsSpeed(int speedLeft, int speedRight){
 
   moveLeftMotor(leftMotorSignal);
   moveRightMotor(rightMotorSignal);
+}
+
+void moveMotorLeft(int speed){
+  speed = constrain(speed, -100, 100);
+  moveLeftMotor(speed);
+}
+
+void moveMotorRight(int speed){
+  speed = constrain(speed, -100, 100);
+  moveRightMotor(speed);
 }
 
 void lineRobot::moveLeftMotor(int u){
@@ -236,31 +237,23 @@ void lineRobot::stop(){
 
 
 int lineRobot::computePidSpeedMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime) {
-    // Пропорциональная составляющая
+    //proporional value
     float P = kp * err;
     float dt =(millis()-lastTime)/1000.0;
     lastTime = millis();
-    // Интегральная составляющая
+    // integral value
     if (P<25){
       integral += err*dt;
     }
     float I = ki * integral;
 
-    // Дифференциальная составляющая
+    // derrivative value
     float D = kd * (err - previousErr)/dt;
 
-    // Обновляем предыдущую ошибку
     previousErr = err;
 
-    // Вычисляем итоговое значение ПИД-регулятора
     float output = P + I + D;
 
-    // Установить минимальный выход, если ошибка больше abs(0.1)
-    // if (fabs(err) > 0.1 && fabs(output) < 1) {
-    //     output = (output > 0) ? 1 : -1;
-    // }
-
-    // Преобразуем выходное значение в диапазон от -255 до 255
     int motorSpeed = constrain((int)output, -255, 255);
 
     return motorSpeed;
@@ -269,22 +262,16 @@ int lineRobot::computePidSpeedMotor(float err, float kp, float kd, float ki, flo
 int lineRobot::computePidAngleMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime) {
   float P = kp * err;
   float dt =(millis()-lastTime)/1000.0; 
-  // Интегральная составляющая
   if (P<35){
     integral += err*dt;
   }
   float I = ki * integral;
 
-  // Дифференциальная составляющая
   float D = kd * (err - previousErr)/(dt);
-  lastTime = millis();
-  // Обновляем предыдущую ошибку  
+  lastTime = millis(); 
   previousErr = err;
-
-  // Вычисляем итоговое значение ПИД-регулятора
   float output = P + I + D;
 
-  // Преобразуем выходное значение в диапазон от -255 до 255
   int motorSpeed = constrain((int)output, -100, 100);
 
   return motorSpeed;
@@ -321,15 +308,14 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
         rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
     }
     if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
-        rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
+        rightMotorSpeed += (angleLeft - angleRight) * kStraight; 
     } else if (abs(previousErrAngLeft)>abs(previousErrAngRight)) {
-        leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
+        leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
     }
-    // Движение моторов с вычисленными скоростями
+
     moveMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
   }
   stop();
-  //resetEncoders();
 }
 
 
@@ -354,7 +340,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       angleRight = abs(encoderRadianRight());
        int leftMotorSpeed = computePidAngleMotor(targetAngle-angleLeft, kpAng, kdAng, kiAng,integralAngLeft,previousErrAngLeft, lastTimeLeft);
       int rightMotorSpeed = computePidAngleMotor(targetAngle-angleRight, kpAng, kdAng, kiAng,integralAngRight,previousErrAngRight, lastTimeRight);
-     /// Ограничение скорости в диапазоне от -100 до 100
+     /// limit speed [-75,75] for fixing speed 
       leftMotorSpeed = constrain(leftMotorSpeed, -75, 75);
       rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
       if (millis() - startTime < 500) {
@@ -362,16 +348,16 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
         leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
         rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
     }
-      // moveLeftMotor прямолинейности
+ 
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
-          rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
+          rightMotorSpeed += (angleLeft - angleRight) * kStraight;
       } else if (abs(previousErrAngLeft)>abs(previousErrAngRight)) {
-          leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
+          leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
       moveMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
     }
     stop();
-    //resetEncoders();
+
 }
 
 void lineRobot::moveForwardDistance(float dist){
@@ -403,9 +389,9 @@ void lineRobot::moveForwardSeconds(int seconds){
         rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
     }
       if (angleLeft>angleRight) {
-          rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
+          rightMotorSpeed += (angleLeft - angleRight) * kStraight;
       } else if (angleLeft<angleRight) {
-          leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
+          leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
       moveMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
     }
@@ -424,23 +410,23 @@ void lineRobot::moveBackwardSeconds(int seconds){
       float angleRight = encoderRadianRight();
       int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE;
       int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE;
-      // moveLeftMotor прямолинейности
+
       if (millis() - startTime < 500) {
         float power = 0.5 + (millis() - startTime) / 1000.0;
         leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
         rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
     }
       if (abs(angleLeft)>abs(angleRight)) {
-          rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
+          rightMotorSpeed += (angleLeft - angleRight) * kStraight; 
       } else if (abs(angleLeft)<abs(angleRight)) {
-          leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
+          leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
       moveMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
     }
     stop();
-  //resetEncoders();
 }
-//retrun
+
+
 int lineRobot::encoderDegreesRight(){
   return encoderPositionRight*360/pulsesPerRevolution;
 }
@@ -465,7 +451,7 @@ void lineRobot::turnLeftAngle(int ang){
   targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.013;
   long startTime = millis();
   unsigned int period = 40*ang+5000;
-  //long ang_goal = get_angle_for_rotate(ang); 
+
   float angleLeft = 0.0;
   float angleRight = 0.0;
   lastTimeLeft = millis();
@@ -480,26 +466,26 @@ void lineRobot::turnLeftAngle(int ang){
     
       int leftMotorSpeed = computePidAngleMotor(targetAngle-angleLeft, kpAng, kdAng, kiAng,integralAngLeft,previousErrAngLeft, lastTimeLeft);
     int rightMotorSpeed = computePidAngleMotor(targetAngle-angleRight, kpAng, kdAng, kiAng,integralAngRight,previousErrAngRight, lastTimeRight);
-   // Ограничение скорости в диапазоне от -100 до 100
+
     leftMotorSpeed = constrain(leftMotorSpeed, -75, 75);
     rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
-    // плавный старт
+    // smooth start
     if (millis() - startTime < 500) {
         float power = 0.5 + (millis() - startTime) / 1000.0;
         leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
         rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
     }
-    // moveLeftMotor прямолинейности
+ 
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
-          rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
+          rightMotorSpeed += (angleLeft - angleRight) * kStraight; 
       } else if (abs(previousErrAngLeft)>abs(previousErrAngRight)) {
-          leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
+          leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
-    // Движение моторов с вычисленными скоростями
+
     moveMotorsSpeed(-leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
   } 
   stop();
-  //resetEncoders();
+
   delay(500);
 }
 void lineRobot::turnRightAngle(int ang){
@@ -509,7 +495,7 @@ void lineRobot::turnRightAngle(int ang){
   targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.013;
   long startTime = millis();
   unsigned int period = 40*ang+5000;
-  //long ang_goal = get_angle_for_rotate(ang); 
+ 
   float angleLeft = 0.0;
   float angleRight = 0.0;
   lastTimeLeft = millis();
@@ -524,45 +510,42 @@ void lineRobot::turnRightAngle(int ang){
     int leftMotorSpeed = computePidAngleMotor(targetAngle-angleLeft, kpAng, kdAng, kiAng,integralAngLeft,previousErrAngLeft, lastTimeLeft);
     int rightMotorSpeed = computePidAngleMotor(targetAngle-angleRight, kpAng, kdAng, kiAng,integralAngRight,previousErrAngRight, lastTimeRight);
 
-    // Ограничение скорости в диапазоне от -100 до 100
+ 
     leftMotorSpeed = constrain(leftMotorSpeed, -75, 75);
     rightMotorSpeed = constrain(rightMotorSpeed, -75, 75);
-    // плавный старт
+   // smooth start
     if (millis() - startTime < 500) {
         float power = 0.5 + (millis() - startTime) / 1000.0;
         leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
         rightMotorSpeed = rightMotorSpeed * constrain(power, 0.5, 1.0);
     }
-    // moveLeftMotor прямолинейности
+ 
       if (abs(previousErrAngLeft)<abs(previousErrAngRight)) {
-          rightMotorSpeed += (angleLeft - angleRight) * kStraight; // Увеличиваем скорость правого мотора
+          rightMotorSpeed += (angleLeft - angleRight) * kStraight;
       } else if (abs(previousErrAngLeft)>abs(previousErrAngRight)) {
-          leftMotorSpeed += (angleRight - angleLeft) * kStraight; // Увеличиваем скорость левого мотора
+          leftMotorSpeed += (angleRight - angleLeft) * kStraight;
       }
-    // Движение моторов с вычисленными скоростями
+
     moveMotorsSpeed(leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, -rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
   } 
   stop();
-  //resetEncoders();
+
   delay(500);
 }
 void lineRobot::resetLeftEncoder(){
   lineRobot::encoderPositionLeft = 0;
-  //encLeft.clearCount();
 }
 void lineRobot::resetRightEncoder(){
   lineRobot::encoderPositionRight = 0;
-  //encRight.clearCount();
+
 }
 void lineRobot::resetLeftEncoderValue(int value){
   encoderPositionLeft = value;
-  //encLeft.setCount(value);
-  //encLeft.clearCount();
+
 }
 void lineRobot::resetRightEncoderValue(int value){
   encoderPositionRight = value;
-  //encRight.setCount(value);
-  //encRight.clearCount();
+
 }
 void lineRobot::resetRegulators(){
     lastTimeLeftSpeed=millis()+3;
@@ -579,6 +562,7 @@ void lineRobot::resetRegulators(){
     previousErrAngRight=0;
 }
 void lineRobot::resetEncoders(){
+  // save error
   // long delta = abs(encLeft.getCount())-abs(encRight.getCount());
   // if (delta>15){
   //   resetLeftEncoderValue(delta);

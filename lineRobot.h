@@ -58,6 +58,9 @@ public:
     void getSpeedMotors(uint8_t interval, float& speedR,float& speedL);
     void moveMotorsSpeed(int speedLeft, int speedRight);
 
+
+    void moveMotorLeft(int sp);
+    void moveMotorRight(int sp);
     void moveLeftMotorSpeed(int sp);
     void moveRightMotorSpeed(int sp);
     void moveRightMotorSpeed(int speed, float curSpeed);
