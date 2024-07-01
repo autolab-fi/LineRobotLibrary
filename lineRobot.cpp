@@ -56,6 +56,9 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
 
     }
 
+void lineRobot::setBlockTrue(){
+  block = true;
+}
 
 
 void lineRobot::begin(){
@@ -281,6 +284,9 @@ int lineRobot::computePidAngleMotor(float err, float kp, float kd, float ki, flo
 
 //Move forward for dist in cm 
 void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
+  //block for some functions
+  if block:
+    return
   // dist in cm, RADIUS_WHEEL in cm
   targetAngle = dist/(RADIUS_WHEEL)*1.02;
   resetEncoders();
@@ -321,7 +327,9 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
 
 //Move backward for dist in cm 
 void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
-    
+    //block for some functions
+    if block:
+      return
     // dist in cm, RADIUS_WHEEL in cm
     targetAngle = dist/(RADIUS_WHEEL)*1.02;
     resetEncoders();
@@ -370,6 +378,9 @@ void lineRobot::moveBackwardDistance(float dist){
 
 //Move forward for seconds
 void lineRobot::moveForwardSeconds(int seconds){
+  //block for some functions
+    if block:
+      return
     resetEncoders();
     resetRegulators();
     long startTime = millis();
@@ -399,6 +410,9 @@ void lineRobot::moveForwardSeconds(int seconds){
 }
 //Move forward for seconds
 void lineRobot::moveBackwardSeconds(int seconds){
+  //block for some functions
+    if block:
+      return
   resetEncoders();
   resetRegulators();
     long startTime = millis();
@@ -445,6 +459,9 @@ float lineRobot::encoderRadianLeft(){
 
 
 void lineRobot::turnLeftAngle(int ang){
+  //block for some functions
+    if block:
+      return
   resetEncoders();
   resetRegulators();
   float error = 0.07;
@@ -489,6 +506,9 @@ void lineRobot::turnLeftAngle(int ang){
   delay(500);
 }
 void lineRobot::turnRightAngle(int ang){
+  //block for some functions
+    if block:
+      return
   resetEncoders();
   resetRegulators();
   float error = 0.07;

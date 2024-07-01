@@ -70,7 +70,7 @@ public:
     float get_speed_L(uint8_t interval);
     float get_speed_R(uint8_t interval);
 
-   
+    void setBlockTrue();
 
     void stopMotorLeft();
     void stopMotorRight();
@@ -106,6 +106,7 @@ public:
     static volatile int lastEncoded_L;
 
     private:
+        bool block;
         int pulsesPerRevolution;
         float k_speed_radians;
         float max_speed_radians;
