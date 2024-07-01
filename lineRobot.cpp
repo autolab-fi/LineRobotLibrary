@@ -40,8 +40,8 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kpAng = 45.00;
         kiAng = 100.00;
         kdAng = 2.50;
-        kpSpeedLeft = 55.00;
-        kpSpeedRight = 35.00;
+        kpSpeedLeft = 65.00;
+        kpSpeedRight = 25.00;
         kdSpeedLeft = 0.50;
         kdSpeedRight = 0.1;
         kiSpeed = 0.00;
