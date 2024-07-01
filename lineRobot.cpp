@@ -157,12 +157,12 @@ void lineRobot::moveMotorsSpeed(int speedLeft, int speedRight){
   moveRightMotor(rightMotorSignal);
 }
 
-void moveMotorLeft(int speed){
+void lineRobot::moveMotorLeft(int speed){
   speed = constrain(speed, -100, 100);
   moveLeftMotor(speed);
 }
 
-void moveMotorRight(int speed){
+void lineRobot::moveMotorRight(int speed){
   speed = constrain(speed, -100, 100);
   moveRightMotor(speed);
 }
