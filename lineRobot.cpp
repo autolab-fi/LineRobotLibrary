@@ -286,7 +286,7 @@ int lineRobot::computePidAngleMotor(float err, float kp, float kd, float ki, flo
 void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
   //block for some functions
   if (block)
-    return
+    return;
   // dist in cm, RADIUS_WHEEL in cm
   targetAngle = dist/(RADIUS_WHEEL)*1.02;
   resetEncoders();
@@ -329,7 +329,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
 void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     //block for some functions
     if (block)
-    return
+    return;
     // dist in cm, RADIUS_WHEEL in cm
     targetAngle = dist/(RADIUS_WHEEL)*1.02;
     resetEncoders();
@@ -380,7 +380,7 @@ void lineRobot::moveBackwardDistance(float dist){
 void lineRobot::moveForwardSeconds(int seconds){
   //block for some functions
     if (block)
-    return
+    return;
     resetEncoders();
     resetRegulators();
     long startTime = millis();
@@ -412,7 +412,7 @@ void lineRobot::moveForwardSeconds(int seconds){
 void lineRobot::moveBackwardSeconds(int seconds){
   //block for some functions
   if (block)
-    return
+    return;
   resetEncoders();
   resetRegulators();
     long startTime = millis();
@@ -461,7 +461,7 @@ float lineRobot::encoderRadianLeft(){
 void lineRobot::turnLeftAngle(int ang){
   //block for some functions
     if (block)
-    return
+    return;
   resetEncoders();
   resetRegulators();
   float error = 0.07;
@@ -508,7 +508,7 @@ void lineRobot::turnLeftAngle(int ang){
 void lineRobot::turnRightAngle(int ang){
   //block for some functions
     if (block)
-    return
+    return;
   resetEncoders();
   resetRegulators();
   float error = 0.07;
