@@ -110,36 +110,36 @@ void lineRobot::updateEncoderRight() {
 }
 
 
-void lineRobot::moveLeftMotorSpeed(int speed){
+void lineRobot::startMotorSpeedLeft(int speed){
   speed = constrain(speed, -100, 100);
   float cur_sp = get_speed_L(20);
-  moveLeftMotorSpeed(speed,cur_sp);
+  startMotorSpeedLeft(speed,cur_sp);
 }
 
-void lineRobot::moveLeftMotorSpeed(int speed, float curSpeed){
+void lineRobot::startMotorSpeedLeft(int speed, float curSpeed){
   speed = constrain(speed, -100, 100);
   float target_speed = speed*k_speed_radians;
   float err = target_speed - curSpeed;
   leftMotorSignal=computePidSpeedMotor(err, kpSpeedLeft, kdSpeedLeft, kiSpeed, integralSpeedLeft, previousErrSpeedLeft, lastTimeLeftSpeed);
-  moveLeftMotor(leftMotorSignal);
+  startMotorLeft(leftMotorSignal);
 }
 
 
-void lineRobot::moveRightMotorSpeed(int speed){
+void lineRobot::startMotorSpeedRight(int speed){
   speed = constrain(speed, -100, 100);
   float cur_sp = get_speed_R(20);
-  moveRightMotorSpeed(speed,cur_sp);
+  startMotorSpeedRight(speed,cur_sp);
 }
 
-void lineRobot::moveRightMotorSpeed(int speed, float curSpeed){
+void lineRobot::startMotorSpeedRight(int speed, float curSpeed){
   speed = constrain(speed, -100, 100);
   float target_speed = speed*k_speed_radians;
   float err = target_speed - curSpeed;
   rightMotorSignal=computePidSpeedMotor(err, kpSpeedRight, kdSpeedRight, kiSpeed, integralSpeedRight, previousErrSpeedRight, lastTimeRightSpeed);
-  moveRightMotor(rightMotorSignal);
+  startMotorRight(rightMotorSignal);
 }
 
-void lineRobot::moveMotorsSpeed(int speedLeft, int speedRight){
+void lineRobot::startMotorsSpeed(int speedLeft, int speedRight){
   speedLeft = constrain(speedLeft, -100, 100);
   speedRight = constrain(speedRight, -100, 100);
 
@@ -156,21 +156,11 @@ void lineRobot::moveMotorsSpeed(int speedLeft, int speedRight){
   leftMotorSignal=computePidSpeedMotor(errL, kpSpeedLeft, kdSpeedLeft, kiSpeed, integralSpeedLeft, previousErrSpeedLeft, lastTimeLeftSpeed);
   rightMotorSignal=computePidSpeedMotor(errR, kpSpeedRight, kdSpeedRight, kiSpeed, integralSpeedRight, previousErrSpeedRight, lastTimeRightSpeed);
 
-  moveLeftMotor(leftMotorSignal);
-  moveRightMotor(rightMotorSignal);
+  startMotorLeft(leftMotorSignal);
+  startMotorRight(rightMotorSignal);
 }
 
-void lineRobot::moveMotorLeft(int speed){
-  speed = constrain(speed, -100, 100);
-  moveLeftMotor(speed);
-}
-
-void lineRobot::moveMotorRight(int speed){
-  speed = constrain(speed, -100, 100);
-  moveRightMotor(speed);
-}
-
-void lineRobot::moveLeftMotor(int u){
+void lineRobot::startLeftMotor(int u){
   if (u<0){
     analogWrite(in1,0);
     analogWrite(in2,-u);
@@ -181,7 +171,7 @@ void lineRobot::moveLeftMotor(int u){
   }
 }
 
-void lineRobot::moveRightMotor(int u){
+void lineRobot::startRightMotor(int u){
   if (u<0){
     analogWrite(in3,0);
     analogWrite(in4,-u);
@@ -319,7 +309,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
         leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
     }
 
-    moveMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
+    startMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
   }
   stop();
 }
@@ -362,7 +352,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
       } else if (abs(previousErrAngLeft)>abs(previousErrAngRight)) {
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
-      moveMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
+      startMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
     }
     stop();
 
@@ -404,7 +394,7 @@ void lineRobot::moveForwardSeconds(int seconds){
       } else if (angleLeft<angleRight) {
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
-      moveMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
+      startMotorsSpeed(leftMotorSpeed, rightMotorSpeed);
     }
     stop();
 }
@@ -435,7 +425,7 @@ void lineRobot::moveBackwardSeconds(int seconds){
       } else if (abs(angleLeft)<abs(angleRight)) {
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
-      moveMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
+      startMotorsSpeed(-leftMotorSpeed, -rightMotorSpeed);
     }
     stop();
 }
@@ -499,7 +489,7 @@ void lineRobot::turnLeftAngle(int ang){
           leftMotorSpeed += (angleRight - angleLeft) * kStraight; 
       }
 
-    moveMotorsSpeed(-leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
+    startMotorsSpeed(-leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
   } 
   stop();
 
@@ -546,7 +536,7 @@ void lineRobot::turnRightAngle(int ang){
           leftMotorSpeed += (angleRight - angleLeft) * kStraight;
       }
 
-    moveMotorsSpeed(leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, -rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
+    startMotorsSpeed(leftMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0, -rightMotorSpeed*STANDARD_SPEED_PERCENTAGE/100.0);
   } 
   stop();
 
