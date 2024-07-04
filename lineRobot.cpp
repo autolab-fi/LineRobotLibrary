@@ -160,7 +160,7 @@ void lineRobot::startMotorsSpeed(int speedLeft, int speedRight){
   startMotorRight(rightMotorSignal);
 }
 
-void lineRobot::startLeftMotor(int u){
+void lineRobot::startMotorLeft(int u){
   if (u<0){
     analogWrite(in1,0);
     analogWrite(in2,-u);
@@ -171,7 +171,7 @@ void lineRobot::startLeftMotor(int u){
   }
 }
 
-void lineRobot::startRightMotor(int u){
+void lineRobot::startMotorRight(int u){
   if (u<0){
     analogWrite(in3,0);
     analogWrite(in4,-u);
