@@ -56,14 +56,14 @@ public:
     float encoderRadianRight();
     float encoderRadianLeft();
     void getSpeedMotors(uint8_t interval, float& speedR,float& speedL);
-    void startMotorsSpeed(int speedLeft, int speedRight);
+    void runMotorsSpeed(int speedLeft, int speedRight);
 
-    void startMotorSpeedLeft(int sp);
-    void startMotorSpeedRight(int sp);
-    void startMotorSpeedRight(int speed, float curSpeed);
-    void startMotorSpeedLeft(int speed, float curSpeed);
-    void startMotorRight(int u);
-    void startMotorLeft(int u);
+    void runMotorSpeedLeft(int sp);
+    void runMotorSpeedRight(int sp);
+    void runMotorSpeedRight(int speed, float curSpeed);
+    void runMotorSpeedLeft(int speed, float curSpeed);
+    void runMotorRight(int u);
+    void runMotorLeft(int u);
     float get_speed_L(uint8_t interval);
     float get_speed_R(uint8_t interval);
 
