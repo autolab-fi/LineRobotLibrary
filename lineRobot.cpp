@@ -598,5 +598,5 @@ void lineRobot::rotate(){
 }
 
 
-lineRobot robot = lineRobot(2, 12, 4, 16,14,27,18,19, 3.3, 18.4, 2480);
+lineRobot robot = lineRobot(2, 12, 16, 4,14,27,18,19, 3.3, 18.4, 2480);
 //lineRobot robot = lineRobot(12, 2, 4, 16, 18, 19, 14, 27, 3.3, 18.4, 2480);
