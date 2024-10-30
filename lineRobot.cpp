@@ -455,7 +455,7 @@ void lineRobot::turnLeftAngle(int ang){
   resetEncoders();
   resetRegulators();
   float error = 0.04;
-  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.023;
+  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180);
   long startTime = millis();
   unsigned int period = 40*ang+5000;
 
@@ -502,7 +502,7 @@ void lineRobot::turnRightAngle(int ang){
   resetEncoders();
   resetRegulators();
   float error = 0.04;
-  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.023;
+  targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180);
   long startTime = millis();
   unsigned int period = 40*ang+5000;
  
@@ -598,5 +598,5 @@ void lineRobot::rotate(){
 }
 
 
-lineRobot robot = lineRobot(2, 12, 16, 4,14,27,18,19, 3.3, 18.4, 2480);
+lineRobot robot = lineRobot(2, 12, 16, 4,14,27,18,19, 3.3, 18.4, 2376);
 //lineRobot robot = lineRobot(12, 2, 4, 16, 18, 19, 14, 27, 3.3, 18.4, 2480);
