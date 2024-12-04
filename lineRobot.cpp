@@ -47,7 +47,7 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kiSpeed = 0.00;
         kStraight = 80.00;
             
-        STANDARD_SPEED_PERCENTAGE = 60;
+        STANDARD_SPEED_PERCENTAGE = 80;
 
         encoderPinALeft = 14;
         encoderPinBLeft = 27;
@@ -285,7 +285,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
   float angleRight = 0.0;
   float k_sp = abs(sp)/100.0;
   long startTime = millis();
-  unsigned int period = constrain(120*dist/k_sp+3000,0,30000);
+  unsigned int period = constrain(200*dist/k_sp+3000,0,30000);
   
   int leftMotorSpeed = 0;
   int rightMotorSpeed = 0;
@@ -328,7 +328,7 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
     float angleRight = 0.0;
     float k_sp = abs(sp)/100.0;
     long startTime = millis();
-    unsigned int period = constrain(120*dist/k_sp+3000,0,30000);
+    unsigned int period = constrain(200*dist/k_sp+3000,0,30000);
     previousErrAngLeft = targetAngle;
     previousErrAngRight = targetAngle;
     float curSpeedL = 0;
@@ -457,7 +457,7 @@ void lineRobot::turnLeftAngle(int ang){
   float error = 0.07;
   targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.05;
   long startTime = millis();
-  unsigned int period = 40*ang+5000;
+  unsigned int period = 80*ang+5000;
 
   float angleLeft = 0.0;
   float angleRight = 0.0;
@@ -504,7 +504,7 @@ void lineRobot::turnRightAngle(int ang){
   float error = 0.07;
   targetAngle = ang*distance_between_wheel_and_center*PI/(RADIUS_WHEEL*180)*1.05;
   long startTime = millis();
-  unsigned int period = 40*ang+5000;
+  unsigned int period = 80*ang+5000;
  
   float angleLeft = 0.0;
   float angleRight = 0.0;
