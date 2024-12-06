@@ -28,6 +28,7 @@ public:
     int leftMotorSignal;
     int rightMotorSignal;
     uint8_t STANDARD_SPEED_PERCENTAGE;
+    uint8_t STANDARD_SPEED_PERCENTAGE_SLOW;
     long lastTimeLeft=0;
     long lastTimeRight=0;
 

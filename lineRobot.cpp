@@ -47,7 +47,8 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         kiSpeed = 0.00;
         kStraight = 80.00;
             
-        STANDARD_SPEED_PERCENTAGE = 80;
+        STANDARD_SPEED_PERCENTAGE = 65;
+        STANDARD_SPEED_PERCENTAGE_SLOW = 50;
 
         encoderPinALeft = 14;
         encoderPinBLeft = 27;
@@ -382,8 +383,8 @@ void lineRobot::moveForwardSeconds(int seconds){
     while (period>millis()-startTime){ 
       angleLeft = encoderRadianLeft();
       angleRight = encoderRadianRight();
-      int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE;
-      int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE;
+      int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE_SLOW;
+      int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE_SLOW;
       if (millis() - startTime < 500) {
         float power = 0.5 + (millis() - startTime) / 1000.0;
         leftMotorSpeed = leftMotorSpeed * constrain(power, 0.5, 1.0);
@@ -412,8 +413,8 @@ void lineRobot::moveBackwardSeconds(int seconds){
     while (period>millis()-startTime){ 
       float angleLeft = encoderRadianLeft();
       float angleRight = encoderRadianRight();
-      int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE;
-      int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE;
+      int leftMotorSpeed = STANDARD_SPEED_PERCENTAGE_SLOW;
+      int rightMotorSpeed = STANDARD_SPEED_PERCENTAGE_SLOW;
 
       if (millis() - startTime < 500) {
         float power = 0.5 + (millis() - startTime) / 1000.0;
