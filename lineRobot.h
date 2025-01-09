@@ -89,6 +89,8 @@ public:
     void turnLeft();
     void turnRight();
     void rotate();
+    long getPositionLeftEncoder();
+    long getPositionRightEncoder();
     
     static void updateEncoderRight();
     void begin();
@@ -108,6 +110,8 @@ public:
         int pulsesPerRevolution;
         float k_speed_radians;
         float max_speed_radians;
+        long encoderPositionLeft = 0;
+        long encoderPositionRight = 0;
     
 
 

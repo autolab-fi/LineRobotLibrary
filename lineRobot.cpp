@@ -558,6 +558,15 @@ void lineRobot::resetRightEncoderValue(int value){
   encoderPositionRight = value;
 
 }
+
+long lineRobot::getPositionLeftEncoder() {
+    return encoderPositionLeft;
+}
+
+long lineRobot::getPositionRightEncoder() {
+    return encoderPositionRight;
+}
+
 void lineRobot::resetRegulators(){
     lastTimeLeftSpeed=millis()+3;
     lastTimeRightSpeed=millis()+3;
