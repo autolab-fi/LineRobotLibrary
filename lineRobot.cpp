@@ -598,6 +598,6 @@ void lineRobot::rotate(){
   return turnRightAngle(180);
 }
 
-lineRobot robott= lineRobot(32, 33, 25, 26,14,27,18,19, 3.3, 18.4, 2376);
+lineRobot robot = lineRobot(32, 33, 25, 26,14,27,18,19, 3.3, 18.4, 2376);
 //lineRobot robot = lineRobot(2, 12, 16, 4,14,27,18,19, 3.3, 18.4, 2376);
 //lineRobot robot = lineRobot(12, 2, 4, 16, 18, 19, 14, 27, 3.3, 18.4, 2480);
