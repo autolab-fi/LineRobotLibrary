@@ -8,8 +8,8 @@
 
 uint8_t lineRobot::encoderPinALeft=14;
 uint8_t lineRobot::encoderPinBLeft=27;
-uint8_t lineRobot::encoderPinARight=18;
-uint8_t lineRobot::encoderPinBRight=19;
+uint8_t lineRobot::encoderPinARight=39;
+uint8_t lineRobot::encoderPinBRight=36;
 volatile long lineRobot::encoderPositionRight=0;
 volatile int lineRobot::lastEncoded_R=0;
 volatile long lineRobot::encoderPositionLeft=0;
@@ -17,7 +17,7 @@ volatile int lineRobot::lastEncoded_L=0;
 
 
 lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, 
-  uint8_t rightMotorPin2, uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_, 
+  uint8_t rightMotorPin2, uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
   uint8_t encoderPinARight_, uint8_t encoderPinBRight_, float wheel_radius, float distance_between_wheels, int encoderResolution)
 {
 	
@@ -60,10 +60,10 @@ lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t right
         STANDARD_SPEED_PERCENTAGE = 65;
         STANDARD_SPEED_PERCENTAGE_SLOW = 50;
 
-        encoderPinALeft = 14;
-        encoderPinBLeft = 27;
-        encoderPinARight = 18;
-        encoderPinBRight = 19;
+        encoderPinALeft = encoderPinALeft_;
+        encoderPinBLeft = encoderPinBLeft_;
+        encoderPinARight = encoderPinARight_;
+        encoderPinBRight = encoderPinBRight_;
 
     }
 
@@ -608,6 +608,6 @@ void lineRobot::rotate(){
   return turnRightAngle(180);
 }
 
-lineRobot robot = lineRobot(25, 26, 32, 33,14,27,18,19, 3.3, 18.4, 2376);
+//lineRobot robot = lineRobot(25, 26, 32, 33,14,27,18,19, 3.3, 18.4, 2376);
 //lineRobot robot = lineRobot(2, 12, 16, 4,14,27,18,19, 3.3, 18.4, 2376);
 //lineRobot robot = lineRobot(12, 2, 4, 16, 18, 19, 14, 27, 3.3, 18.4, 2480);
