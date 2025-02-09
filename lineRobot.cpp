@@ -15,6 +15,7 @@ volatile int lineRobot::lastEncoded_R=0;
 volatile long lineRobot::encoderPositionLeft=0;
 volatile int lineRobot::lastEncoded_L=0;
 
+lineRobot::lineRobot(){}
 
 lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, 
   uint8_t rightMotorPin2, uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
