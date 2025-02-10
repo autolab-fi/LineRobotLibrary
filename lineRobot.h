@@ -104,7 +104,7 @@ public:
     static volatile int lastEncoded_L;
 
     private:
-        bool block;
+        bool block=false;
         int pulsesPerRevolution;
         float k_speed_radians;
         float max_speed_radians;
