@@ -51,6 +51,16 @@ public:
     int computePidAngleMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime);
     lineRobot();
     lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, uint8_t rightMotorPin2, uint8_t encoderPinALeft,uint8_t encoderPinBLeft, uint8_t encoderPinARight, uint8_t encoderPinBRight, float wheel_radius, float distance_between_wheels, int encoderResolution);
+    lineRobot(
+        uint8_t leftMotorPin1, uint8_t leftMotorPin2,
+        uint8_t rightMotorPin1, uint8_t rightMotorPin2, 
+        uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
+        uint8_t encoderPinARight_, uint8_t encoderPinBRight_, 
+        float wheel_radius, float distance_between_wheels, int encoderResolution,
+        float kpAng_, float kiAng_, float kdAng_, 
+        float kpSpeedLeft_, float kpSpeedRight_, float kdSpeedLeft_, float kdSpeedRight_, float kiSpeed_, float kStraight_,
+        float maxSpeedRadians_
+      );
     void resetRegulators();
     int encoderDegreesRight();
     int encoderDegreesLeft();

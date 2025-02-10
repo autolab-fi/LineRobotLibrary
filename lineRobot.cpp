@@ -17,11 +17,63 @@ volatile int lineRobot::lastEncoded_L=0;
 
 lineRobot::lineRobot(){}
 
-lineRobot::lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, 
-  uint8_t rightMotorPin2, uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
-  uint8_t encoderPinARight_, uint8_t encoderPinBRight_, float wheel_radius, float distance_between_wheels, int encoderResolution)
+lineRobot::lineRobot(
+  uint8_t leftMotorPin1, uint8_t leftMotorPin2,
+  uint8_t rightMotorPin1, uint8_t rightMotorPin2, 
+  uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
+  uint8_t encoderPinARight_, uint8_t encoderPinBRight_, 
+  float wheel_radius, float distance_between_wheels, int encoderResolution,
+  float kpAng_, float kiAng_, float kdAng_, 
+  float kpSpeedLeft_, float kpSpeedRight_, float kdSpeedLeft_, float kdSpeedRight_, float kiSpeed_, float kStraight_,
+  float maxSpeedRadians_
+)
 {
 	
+    distance_between_wheel_and_center = distance_between_wheels/2;
+    RADIUS_WHEEL = wheel_radius;
+    in1 = leftMotorPin1;
+    in2 = leftMotorPin2;
+    pinMode(in1,OUTPUT);
+    pinMode(in2,OUTPUT);
+    in3 = rightMotorPin1;
+    in4 = rightMotorPin2;
+    pinMode(in3,OUTPUT);
+    pinMode(in4,OUTPUT);
+    rightMotorSignal = 0;
+    leftMotorSignal = 0;
+    pulsesPerRevolution = encoderResolution;
+    max_speed_radians = maxSpeedRadians_;
+    k_speed_radians = max_speed_radians/100.0;
+
+    kpAng = kpAng_;
+    kiAng = kiAng_;
+    kdAng = kdAng_;
+    kpSpeedLeft = kpSpeedLeft_;
+    kpSpeedRight = kpSpeedRight_;
+    kdSpeedLeft = kdSpeedLeft_;
+    kdSpeedRight = kdSpeedRight_;
+    kiSpeed = kiSpeed_;
+    kStraight = kStraight_;
+
+    STANDARD_SPEED_PERCENTAGE = 65;
+    STANDARD_SPEED_PERCENTAGE_SLOW = 50;
+
+    encoderPinALeft = encoderPinALeft_;
+    encoderPinBLeft = encoderPinBLeft_;
+    encoderPinARight = encoderPinARight_;
+    encoderPinBRight = encoderPinBRight_;
+
+}
+
+
+lineRobot::lineRobot(
+  uint8_t leftMotorPin1, uint8_t leftMotorPin2, 
+  uint8_t rightMotorPin1, uint8_t rightMotorPin2, 
+  uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
+  uint8_t encoderPinARight_, uint8_t encoderPinBRight_, 
+  float wheel_radius, float distance_between_wheels, int encoderResolution)
+{
+  
         distance_between_wheel_and_center = distance_between_wheels/2;
         RADIUS_WHEEL = wheel_radius;
         in1 = leftMotorPin1;
