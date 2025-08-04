@@ -49,9 +49,9 @@ public:
 
     int computePidSpeedMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime);
     int computePidAngleMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime);
-    lineRobot();
-    lineRobot(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, uint8_t rightMotorPin2, uint8_t encoderPinALeft,uint8_t encoderPinBLeft, uint8_t encoderPinARight, uint8_t encoderPinBRight, float wheel_radius, float distance_between_wheels, int encoderResolution);
-    lineRobot(
+    Rover();
+    Rover(uint8_t leftMotorPin1, uint8_t leftMotorPin2, uint8_t rightMotorPin1, uint8_t rightMotorPin2, uint8_t encoderPinALeft,uint8_t encoderPinBLeft, uint8_t encoderPinARight, uint8_t encoderPinBRight, float wheel_radius, float distance_between_wheels, int encoderResolution);
+    Rover(
         uint8_t leftMotorPin1, uint8_t leftMotorPin2,
         uint8_t rightMotorPin1, uint8_t rightMotorPin2, 
         uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
