@@ -1,23 +1,23 @@
-#include "lineRobot.h"
+#include "rover.h"
 
 
-// void lineRobot::setStraightMotionCoefficient(float value){
+// void Rover::setStraightMotionCoefficient(float value){
 //   k = value;
 // }
-//lineRobot* lineRobot::instance = nullptr;
+//lineRobot* Rover::instance = nullptr;
 
-uint8_t lineRobot::encoderPinALeft=14;
-uint8_t lineRobot::encoderPinBLeft=27;
-uint8_t lineRobot::encoderPinARight=39;
-uint8_t lineRobot::encoderPinBRight=36;
-volatile long lineRobot::encoderPositionRight=0;
-volatile int lineRobot::lastEncoded_R=0;
-volatile long lineRobot::encoderPositionLeft=0;
-volatile int lineRobot::lastEncoded_L=0;
+uint8_t Rover::encoderPinALeft=14;
+uint8_t Rover::encoderPinBLeft=27;
+uint8_t Rover::encoderPinARight=39;
+uint8_t Rover::encoderPinBRight=36;
+volatile long Rover::encoderPositionRight=0;
+volatile int Rover::lastEncoded_R=0;
+volatile long Rover::encoderPositionLeft=0;
+volatile int Rover::lastEncoded_L=0;
 
-lineRobot::lineRobot(){}
+Rover::Rover(){}
 
-lineRobot::lineRobot(
+Rover::Rover(
   uint8_t leftMotorPin1, uint8_t leftMotorPin2,
   uint8_t rightMotorPin1, uint8_t rightMotorPin2, 
   uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
@@ -66,7 +66,7 @@ lineRobot::lineRobot(
 }
 
 
-lineRobot::lineRobot(
+Rover::Rover(
   uint8_t leftMotorPin1, uint8_t leftMotorPin2, 
   uint8_t rightMotorPin1, uint8_t rightMotorPin2, 
   uint8_t encoderPinALeft_,uint8_t encoderPinBLeft_,
@@ -120,23 +120,23 @@ lineRobot::lineRobot(
 
     }
 
-void lineRobot::setBlockTrue(){
+void Rover::setBlockTrue(){
   block = true;
 }
 
 
-void lineRobot::begin(){
+void Rover::begin(){
   pinMode(encoderPinALeft, INPUT);
   pinMode(encoderPinBLeft, INPUT);
   pinMode(encoderPinARight, INPUT);
   pinMode(encoderPinBRight, INPUT);
-  attachInterrupt(digitalPinToInterrupt(encoderPinALeft), lineRobot::updateEncoderLeft, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoderPinBLeft), lineRobot::updateEncoderLeft, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoderPinARight), lineRobot::updateEncoderRight, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoderPinBRight), lineRobot::updateEncoderRight, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoderPinALeft), Rover::updateEncoderLeft, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoderPinBLeft), Rover::updateEncoderLeft, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoderPinARight), Rover::updateEncoderRight, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoderPinBRight), Rover::updateEncoderRight, CHANGE);
 }    
 
-void lineRobot::updateEncoderLeft() {
+void Rover::updateEncoderLeft() {
   int MSB_L = digitalRead(encoderPinALeft); // Most Significant Bit
   int LSB_L = digitalRead(encoderPinBLeft); // Least Significant Bit
   //Составление двухбитного числа из значений пинов A и B
@@ -154,7 +154,7 @@ void lineRobot::updateEncoderLeft() {
   lastEncoded_L = encoded_L;
 }
 
-void lineRobot::updateEncoderRight() {
+void Rover::updateEncoderRight() {
   // Чтение текущих значений пинов A и B
   int MSB_R = digitalRead(encoderPinARight); // Most Significant Bit
   int LSB_R = digitalRead(encoderPinBRight); // Least Significant Bit
@@ -174,13 +174,13 @@ void lineRobot::updateEncoderRight() {
 }
 
 
-void lineRobot::runMotorSpeedLeft(int speed){
+void Rover::runMotorSpeedLeft(int speed){
   speed = constrain(speed, -100, 100);
   float cur_sp = get_speed_L(20);
   runMotorSpeedLeft(speed,cur_sp);
 }
 
-void lineRobot::runMotorSpeedLeft(int speed, float curSpeed){
+void Rover::runMotorSpeedLeft(int speed, float curSpeed){
   speed = constrain(speed, -100, 100);
   float target_speed = speed*k_speed_radians;
   float err = target_speed - curSpeed;
@@ -189,13 +189,13 @@ void lineRobot::runMotorSpeedLeft(int speed, float curSpeed){
 }
 
 
-void lineRobot::runMotorSpeedRight(int speed){
+void Rover::runMotorSpeedRight(int speed){
   speed = constrain(speed, -100, 100);
   float cur_sp = get_speed_R(20);
   runMotorSpeedRight(speed,cur_sp);
 }
 
-void lineRobot::runMotorSpeedRight(int speed, float curSpeed){
+void Rover::runMotorSpeedRight(int speed, float curSpeed){
   speed = constrain(speed, -100, 100);
   float target_speed = speed*k_speed_radians;
   float err = target_speed - curSpeed;
@@ -203,7 +203,7 @@ void lineRobot::runMotorSpeedRight(int speed, float curSpeed){
   runMotorRight(rightMotorSignal);
 }
 
-void lineRobot::runMotorsSpeed(int speedLeft, int speedRight){
+void Rover::runMotorsSpeed(int speedLeft, int speedRight){
   speedLeft = constrain(speedLeft, -100, 100);
   speedRight = constrain(speedRight, -100, 100);
 
@@ -224,7 +224,7 @@ void lineRobot::runMotorsSpeed(int speedLeft, int speedRight){
   runMotorRight(rightMotorSignal);
 }
 
-void lineRobot::runMotorLeft(int u){
+void Rover::runMotorLeft(int u){
   if (u<0){
     analogWrite(in1,0);
     analogWrite(in2,-u);
@@ -235,7 +235,7 @@ void lineRobot::runMotorLeft(int u){
   }
 }
 
-void lineRobot::runMotorRight(int u){
+void Rover::runMotorRight(int u){
   if (u<0){
     analogWrite(in3,0);
     analogWrite(in4,-u);
@@ -247,7 +247,7 @@ void lineRobot::runMotorRight(int u){
 }
 
 
-float lineRobot::get_speed_L(uint8_t interval){
+float Rover::get_speed_L(uint8_t interval){
   float lastPos = encoderRadianLeft();
   delay(interval);
   float curPos = encoderRadianLeft();
@@ -255,7 +255,7 @@ float lineRobot::get_speed_L(uint8_t interval){
   float delta_time = (float(interval) / 1000.0);
   return delta_pos / delta_time;
 }
-float lineRobot::get_speed_R(uint8_t interval){
+float Rover::get_speed_R(uint8_t interval){
   float lastPos = encoderRadianRight();
   delay(interval);
   float curPos = encoderRadianRight();
@@ -263,7 +263,7 @@ float lineRobot::get_speed_R(uint8_t interval){
   float delta_time = (float(interval) / 1000.0);
   return delta_pos / delta_time;
 }
- void lineRobot::getSpeedMotors(uint8_t interval, float& speedL,float& speedR){
+ void Rover::getSpeedMotors(uint8_t interval, float& speedL,float& speedR){
   float lastPosR = encoderRadianRight();
   float lastPosL = encoderRadianLeft();
   delay(interval);
@@ -277,23 +277,23 @@ float lineRobot::get_speed_R(uint8_t interval){
  }
 
 
-void lineRobot::stopMotorLeft(){
+void Rover::stopMotorLeft(){
   analogWrite(in1, 0);
   analogWrite(in2, 0);
 }
-void lineRobot::stopMotorRight(){
+void Rover::stopMotorRight(){
   analogWrite(in3, 0);
   analogWrite(in4, 0);
 }
 
-void lineRobot::stop(){
+void Rover::stop(){
   stopMotorRight();
   stopMotorLeft();
 }
 
 
 
-int lineRobot::computePidSpeedMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime) {
+int Rover::computePidSpeedMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime) {
     //proporional value
     float P = kp * err;
     float dt =(millis()-lastTime)/1000.0;
@@ -316,7 +316,7 @@ int lineRobot::computePidSpeedMotor(float err, float kp, float kd, float ki, flo
     return motorSpeed;
 }
 
-int lineRobot::computePidAngleMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime) {
+int Rover::computePidAngleMotor(float err, float kp, float kd, float ki, float& integral, float& previousErr, long& lastTime) {
   float P = kp * err;
   float dt =(millis()-lastTime)/1000.0; 
   if (P<35){
@@ -337,7 +337,7 @@ int lineRobot::computePidAngleMotor(float err, float kp, float kd, float ki, flo
 
 
 //Move forward for dist in cm 
-void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
+void Rover::moveForwardSpeedDistance(int sp, float  dist){
   //block for some functions
   if (block)
     return;
@@ -380,7 +380,7 @@ void lineRobot::moveForwardSpeedDistance(int sp, float  dist){
 
 
 //Move backward for dist in cm 
-void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
+void Rover::moveBackwardSpeedDistance(int sp, float  dist){
     //block for some functions
     if (block)
     return;
@@ -422,16 +422,16 @@ void lineRobot::moveBackwardSpeedDistance(int sp, float  dist){
 
 }
 
-void lineRobot::moveForwardDistance(float dist){
+void Rover::moveForwardDistance(float dist){
   moveForwardSpeedDistance(STANDARD_SPEED_PERCENTAGE, dist);
 }
 
-void lineRobot::moveBackwardDistance(float dist){
+void Rover::moveBackwardDistance(float dist){
   moveBackwardSpeedDistance(STANDARD_SPEED_PERCENTAGE, dist);
 }
 
 //Move forward for seconds
-void lineRobot::moveForwardSeconds(int seconds){
+void Rover::moveForwardSeconds(int seconds){
   //block for some functions
     if (block)
     return;
@@ -463,7 +463,7 @@ void lineRobot::moveForwardSeconds(int seconds){
     stop();
 }
 //Move forward for seconds
-void lineRobot::moveBackwardSeconds(int seconds){
+void Rover::moveBackwardSeconds(int seconds){
   //block for some functions
   if (block)
     return;
@@ -495,24 +495,24 @@ void lineRobot::moveBackwardSeconds(int seconds){
 }
 
 
-int lineRobot::encoderDegreesRight(){
+int Rover::encoderDegreesRight(){
   return encoderPositionRight*360/pulsesPerRevolution;
 }
 
-int lineRobot::encoderDegreesLeft(){
+int Rover::encoderDegreesLeft(){
   return encoderPositionLeft*360/pulsesPerRevolution;
 }
 
-float lineRobot::encoderRadianRight(){
+float Rover::encoderRadianRight(){
   return encoderPositionRight*2.0*PI/pulsesPerRevolution;
 }
 
-float lineRobot::encoderRadianLeft(){
+float Rover::encoderRadianLeft(){
   return encoderPositionLeft*2.0*PI/pulsesPerRevolution;
 }
 
 
-void lineRobot::turnLeftAngle(int ang){
+void Rover::turnLeftAngle(int ang){
   //block for some functions
     if (block)
     return;
@@ -559,7 +559,7 @@ void lineRobot::turnLeftAngle(int ang){
 
   delay(500);
 }
-void lineRobot::turnRightAngle(int ang){
+void Rover::turnRightAngle(int ang){
   //block for some functions
     if (block)
     return;
@@ -606,22 +606,22 @@ void lineRobot::turnRightAngle(int ang){
 
   delay(500);
 }
-void lineRobot::resetLeftEncoder(){
-  lineRobot::encoderPositionLeft = 0;
+void Rover::resetLeftEncoder(){
+  Rover::encoderPositionLeft = 0;
 }
-void lineRobot::resetRightEncoder(){
-  lineRobot::encoderPositionRight = 0;
+void Rover::resetRightEncoder(){
+  Rover::encoderPositionRight = 0;
 
 }
-void lineRobot::resetLeftEncoderValue(int value){
+void Rover::resetLeftEncoderValue(int value){
   encoderPositionLeft = value;
 
 }
-void lineRobot::resetRightEncoderValue(int value){
+void Rover::resetRightEncoderValue(int value){
   encoderPositionRight = value;
 
 }
-void lineRobot::resetRegulators(){
+void Rover::resetRegulators(){
     lastTimeLeftSpeed=millis()+3;
     lastTimeRightSpeed=millis()+3;
     lastTimeLeft=millis()+2;
@@ -635,7 +635,7 @@ void lineRobot::resetRegulators(){
     integralAngRight=0;
     previousErrAngRight=0;
 }
-void lineRobot::resetEncoders(){
+void Rover::resetEncoders(){
   // save error
   // long delta = abs(encLeft.getCount())-abs(encRight.getCount());
   // if (delta>15){
@@ -651,13 +651,13 @@ void lineRobot::resetEncoders(){
   resetRightEncoder();
   resetLeftEncoder();
 }
-void lineRobot::turnLeft(){
+void Rover::turnLeft(){
   return turnLeftAngle(90);
 }
-void lineRobot::turnRight(){
+void Rover::turnRight(){
   return turnRightAngle(90);
 }
-void lineRobot::rotate(){
+void Rover::rotate(){
   return turnRightAngle(180);
 }
 

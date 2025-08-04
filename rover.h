@@ -3,7 +3,7 @@
 
 // #include <ESP32Encoder.h>
   
-class lineRobot
+class Rover
 {
 public:
      uint8_t in1;
@@ -123,4 +123,4 @@ public:
 
 };
 
-extern lineRobot robot;
+extern Rover rover;
